@@ -47,6 +47,18 @@ class SettingUtils private constructor() {
         var enableSmsCommand: Boolean by SharedPreference(SP_ENABLE_SMS_COMMAND, false)
         var smsCommandSafePhone: String by SharedPreference(SP_SMS_COMMAND_SAFE_PHONE, "")
 
+        //是否启用短信拦截规则（命中拦截规则的短信不再转发）
+        var enableSmsIntercept: Boolean by SharedPreference(SP_ENABLE_SMS_INTERCEPT, false)
+
+        //短信拦截——记录拦截日志
+        var enableSmsInterceptLogs: Boolean by SharedPreference(SP_ENABLE_SMS_INTERCEPT_LOGS, false)
+
+        //短信拦截——拦截号码（逗号/分号分隔，匹配发件人号码结尾即命中）
+        var smsInterceptPhones: String by SharedPreference(SP_SMS_INTERCEPT_PHONES, "")
+
+        //短信拦截——拦截关键词（一行一个，支持正则，命中内容即命中）
+        var smsInterceptKeywords: String by SharedPreference(SP_SMS_INTERCEPT_KEYWORDS, "")
+
         //是否靠近听筒关屏
         var enableCloseToEarpieceTurnOffScreen: Boolean by SharedPreference(SP_ENABLE_CLOSE_TO_EARPIECE_TURN_OFF_SCREEN, false)
 

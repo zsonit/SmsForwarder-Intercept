@@ -676,6 +676,13 @@
     <string name="extra_app_hint">一行一個包名\n開啟異步加載App列表以便選擇</string>
     <string name="app_notify_blacklist">APP通知關鍵詞黑名單</string>
     <string name="app_notify_blacklist_hint">一行一個關鍵詞，支持正則表達式\n通知標題或內容命中任一關鍵詞則不轉發</string>
+    <!-- 短信拦截规则（二次开发新增） -->
+    <string name="sms_intercept">簡訊攔截</string>
+    <string name="sms_intercept_tips">命中攔截規則的簡訊不再轉發</string>
+    <string name="sms_intercept_phones_hint">攔截號碼：多個號碼用逗號/分號分隔，發件人號碼以任一號碼結尾即攔截（可填完整號碼或後幾位）</string>
+    <string name="sms_intercept_keywords_hint">攔截關鍵詞：一行一個，支持正則表達式\n簡訊內容命中任一關鍵詞則不轉發</string>
+    <string name="sms_intercept_logs">記錄攔截日誌</string>
+    <string name="sms_intercepted">已攔截（不轉發）</string>
     <string name="choose_app_hint">下拉選擇獲取包名，關鍵字模糊匹配APP名稱</string>
     <string name="regex_multi_match" tools:ignore="TypographyDashes">^\\s*(並且|或者)\\s(是|不是)\\s(手機號|APP包名|簡訊內容|通知內容|通知標題|卡槽信息|通話類型|UID)\\s(相等|包含|不包含|開頭|結尾|正則匹配)\\s(.*)$</string>
     <string name="privacy_content_1">歡迎使用</string>

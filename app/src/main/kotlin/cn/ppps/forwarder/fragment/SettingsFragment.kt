@@ -141,6 +141,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
 
         //转发短信广播
         switchEnableSms(binding!!.sbEnableSms)
+        //短信拦截规则
+        switchEnableSmsIntercept(binding!!.sbEnableSmsIntercept, binding!!.layoutSmsIntercept)
+        editSmsInterceptPhones(binding!!.etSmsInterceptPhones)
+        editSmsInterceptKeywords(binding!!.etSmsInterceptKeywords)
+        binding!!.scbSmsInterceptLogs.isChecked = SettingUtils.enableSmsInterceptLogs
+        binding!!.scbSmsInterceptLogs.setOnCheckedChangeListener { _: SmoothCheckBox, isChecked: Boolean ->
+            SettingUtils.enableSmsInterceptLogs = isChecked
+        }
         //转发通话记录
         switchEnablePhone(binding!!.sbEnablePhone, binding!!.scbCallType1, binding!!.scbCallType2, binding!!.scbCallType3, binding!!.scbCallType4, binding!!.scbCallType5, binding!!.scbCallType6)
         //转发应用通知
@@ -807,6 +815,41 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 SettingUtils.appNotifyBlacklist = textBlacklist.text.toString().trim().replace("\r", "").replace("\n+", "\n").removeSuffix("\n")
+            }
+        })
+    }
+
+    //短信拦截规则开关（二次开发新增）
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private fun switchEnableSmsIntercept(sbEnableSmsIntercept: SwitchButton, layoutSmsIntercept: LinearLayout) {
+        sbEnableSmsIntercept.isChecked = SettingUtils.enableSmsIntercept
+        layoutSmsIntercept.visibility = if (SettingUtils.enableSmsIntercept) View.VISIBLE else View.GONE
+        sbEnableSmsIntercept.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            SettingUtils.enableSmsIntercept = isChecked
+            layoutSmsIntercept.visibility = if (isChecked) View.VISIBLE else View.GONE
+        }
+    }
+
+    //设置短信拦截号码（二次开发新增）
+    private fun editSmsInterceptPhones(textPhones: EditText) {
+        textPhones.setText(SettingUtils.smsInterceptPhones)
+        textPhones.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                SettingUtils.smsInterceptPhones = textPhones.text.toString().trim()
+            }
+        })
+    }
+
+    //设置短信拦截关键词（二次开发新增）
+    private fun editSmsInterceptKeywords(textKeywords: EditText) {
+        textKeywords.setText(SettingUtils.smsInterceptKeywords)
+        textKeywords.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                SettingUtils.smsInterceptKeywords = textKeywords.text.toString().trim().replace("\r", "").replace("\n+", "\n").removeSuffix("\n")
             }
         })
     }

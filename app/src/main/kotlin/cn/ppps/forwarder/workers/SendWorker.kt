@@ -22,6 +22,7 @@ import cn.ppps.forwarder.utils.HistoryUtils
 import cn.ppps.forwarder.utils.Log
 import cn.ppps.forwarder.utils.SendUtils
 import cn.ppps.forwarder.utils.SettingUtils
+import cn.ppps.forwarder.utils.SmsInterceptUtils
 import cn.ppps.forwarder.utils.TASK_CONDITION_APP
 import cn.ppps.forwarder.utils.TASK_CONDITION_CALL
 import cn.ppps.forwarder.utils.TASK_CONDITION_SMS
@@ -51,6 +52,18 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                 val msgInfo = Gson().fromJson(msgInfoJson, MsgInfo::class.java)
                 //【注意】卡槽id：-1=获取失败、0=卡槽1、1=卡槽2，但是 Rule 表里存的是 SIM1/SIM2
                 val simSlot = "SIM" + (msgInfo.simSlot + 1)
+
+                //短信拦截规则：命中拦截号码或拦截关键词的短信不再转发（不影响自动任务以外的任何流程）
+                if (msgInfo.type == "sms" && SmsInterceptUtils.isIntercepted(msgInfo.from, msgInfo.content)) {
+                    Log.e(TAG, "短信命中拦截规则，不转发：from = ${msgInfo.from}")
+                    if (SettingUtils.enableSmsInterceptLogs) {
+                        val msg = Msg(0, msgInfo.type, msgInfo.from, msgInfo.content, msgInfo.simSlot, msgInfo.simInfo, msgInfo.subId, msgInfo.callType)
+                        val msgId = Core.msg.insert(msg)
+                        val log = Logs(0, msgInfo.type, msgId, 0, 0, 0, ResUtils.getString(R.string.sms_intercepted))
+                        Core.logs.insert(log)
+                    }
+                    return@withContext Result.failure(workDataOf("send" to "intercepted"))
+                }
 
                 //自动任务处理逻辑
                 autoTaskProcess(msgInfo, msgInfoJson, simSlot)

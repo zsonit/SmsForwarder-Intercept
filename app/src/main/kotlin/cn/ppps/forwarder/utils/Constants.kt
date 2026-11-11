@@ -57,6 +57,12 @@ const val SP_ENABLE_SMS_COMMAND = "enable_sms_command"
 const val SP_ENABLE_CLOSE_TO_EARPIECE_TURN_OFF_SCREEN = "enable_close_2_earpiece_turn_off_screen"
 const val SP_SMS_COMMAND_SAFE_PHONE = "sms_command_safe_phone"
 
+//短信拦截规则
+const val SP_ENABLE_SMS_INTERCEPT = "enable_sms_intercept"
+const val SP_ENABLE_SMS_INTERCEPT_LOGS = "enable_sms_intercept_logs"
+const val SP_SMS_INTERCEPT_PHONES = "sms_intercept_phones"
+const val SP_SMS_INTERCEPT_KEYWORDS = "sms_intercept_keywords"
+
 const val ENABLE_LOAD_APP_LIST = "enable_load_app_list"
 const val ENABLE_LOAD_USER_APP_LIST = "enable_load_user_app_list"
 const val ENABLE_LOAD_SYSTEM_APP_LIST = "enable_load_system_app_list"
