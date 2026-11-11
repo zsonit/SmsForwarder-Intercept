@@ -157,6 +157,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         //导出/导入拦截规则
         binding!!.btnSmsInterceptExport.setOnClickListener { exportSmsInterceptRules() }
         binding!!.btnSmsInterceptImport.setOnClickListener { importSmsInterceptRules() }
+        //查看已拦截短信
+        binding!!.btnSmsInterceptedView.setOnClickListener { openNewPage(SmsInterceptedFragment::class.java) }
         //转发通话记录
         switchEnablePhone(binding!!.sbEnablePhone, binding!!.scbCallType1, binding!!.scbCallType2, binding!!.scbCallType3, binding!!.scbCallType4, binding!!.scbCallType5, binding!!.scbCallType6)
         //转发应用通知

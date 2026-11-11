@@ -24,6 +24,7 @@ import cn.ppps.forwarder.database.repository.LogsRepository
 import cn.ppps.forwarder.database.repository.MsgRepository
 import cn.ppps.forwarder.database.repository.RuleRepository
 import cn.ppps.forwarder.database.repository.SenderRepository
+import cn.ppps.forwarder.database.repository.SmsInterceptedRepository
 import cn.ppps.forwarder.database.repository.TaskRepository
 import cn.ppps.forwarder.entity.SimInfo
 import cn.ppps.forwarder.receiver.BatteryReceiver
@@ -88,6 +89,7 @@ class App : Application(), CactusCallback, Configuration.Provider by Core {
     val ruleRepository by lazy { RuleRepository(database.ruleDao()) }
     val senderRepository by lazy { SenderRepository(database.senderDao()) }
     val taskRepository by lazy { TaskRepository(database.taskDao()) }
+    val smsInterceptedRepository by lazy { SmsInterceptedRepository(database.smsInterceptedDao()) }
 
     companion object {
         const val TAG: String = "SmsForwarder"

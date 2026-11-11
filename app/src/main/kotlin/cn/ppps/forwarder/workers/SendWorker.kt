@@ -14,6 +14,7 @@ import cn.ppps.forwarder.core.Core
 import cn.ppps.forwarder.database.entity.Logs
 import cn.ppps.forwarder.database.entity.Msg
 import cn.ppps.forwarder.database.entity.Rule
+import cn.ppps.forwarder.database.entity.SmsIntercepted
 import cn.ppps.forwarder.entity.MsgInfo
 import cn.ppps.forwarder.entity.TaskSetting
 import cn.ppps.forwarder.utils.CHECK_SIM_SLOT_ALL
@@ -68,6 +69,14 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                         val msgId = Core.msg.insert(msg)
                         val log = Logs(0, msgInfo.type, msgId, 0, 0, 0, interceptResponse)
                         Core.logs.insert(log)
+                    }
+                    //已拦截短信存档：无论是否记录转发日志，均存入"已拦截"列表便于查看
+                    try {
+                        Core.smsIntercepted.insert(
+                            SmsIntercepted(0, msgInfo.from, msgInfo.content, msgInfo.simInfo, msgInfo.simSlot)
+                        )
+                    } catch (e: Exception) {
+                        Log.e(TAG, "已拦截短信存档失败：" + e.message.toString())
                     }
                     return@withContext Result.failure(workDataOf("send" to "intercepted"))
                 }

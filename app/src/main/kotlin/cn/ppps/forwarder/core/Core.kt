@@ -9,6 +9,7 @@ import cn.ppps.forwarder.database.repository.LogsRepository
 import cn.ppps.forwarder.database.repository.MsgRepository
 import cn.ppps.forwarder.database.repository.RuleRepository
 import cn.ppps.forwarder.database.repository.SenderRepository
+import cn.ppps.forwarder.database.repository.SmsInterceptedRepository
 import cn.ppps.forwarder.database.repository.TaskRepository
 import cn.ppps.forwarder.utils.Log
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ object Core : Configuration.Provider {
     val rule: RuleRepository by lazy { (app as App).ruleRepository }
     val sender: SenderRepository by lazy { (app as App).senderRepository }
     val task: TaskRepository by lazy { (app as App).taskRepository }
+    val smsIntercepted: SmsInterceptedRepository by lazy { (app as App).smsInterceptedRepository }
 
     fun init(app: Application) {
         this.app = app

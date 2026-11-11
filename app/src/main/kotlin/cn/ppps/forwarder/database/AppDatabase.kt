@@ -12,6 +12,7 @@ import cn.ppps.forwarder.database.dao.LogsDao
 import cn.ppps.forwarder.database.dao.MsgDao
 import cn.ppps.forwarder.database.dao.RuleDao
 import cn.ppps.forwarder.database.dao.SenderDao
+import cn.ppps.forwarder.database.dao.SmsInterceptedDao
 import cn.ppps.forwarder.database.dao.TaskDao
 import cn.ppps.forwarder.database.entity.Frpc
 import cn.ppps.forwarder.database.entity.Logs
@@ -19,6 +20,7 @@ import cn.ppps.forwarder.database.entity.LogsDetail
 import cn.ppps.forwarder.database.entity.Msg
 import cn.ppps.forwarder.database.entity.Rule
 import cn.ppps.forwarder.database.entity.Sender
+import cn.ppps.forwarder.database.entity.SmsIntercepted
 import cn.ppps.forwarder.database.entity.Task
 import cn.ppps.forwarder.database.ext.ConvertersDate
 import cn.ppps.forwarder.utils.DATABASE_NAME
@@ -26,9 +28,9 @@ import cn.ppps.forwarder.utils.SettingUtils
 import cn.ppps.forwarder.utils.TAG_LIST
 
 @Database(
-    entities = [Frpc::class, Msg::class, Logs::class, Rule::class, Sender::class, Task::class],
+    entities = [Frpc::class, Msg::class, Logs::class, Rule::class, Sender::class, Task::class, SmsIntercepted::class],
     views = [LogsDetail::class],
-    version = 21,
+    version = 22,
     exportSchema = false
 )
 @TypeConverters(ConvertersDate::class)
@@ -40,6 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun ruleDao(): RuleDao
     abstract fun senderDao(): SenderDao
     abstract fun taskDao(): TaskDao
+    abstract fun smsInterceptedDao(): SmsInterceptedDao
 
     companion object {
         @Volatile
@@ -112,6 +115,7 @@ custom_domains = smsf.demo.com
                     MIGRATION_18_19,
                     MIGRATION_19_20,
                     MIGRATION_20_21,
+                    MIGRATION_21_22,
                 )
 
             /*if (BuildConfig.DEBUG) {
@@ -465,6 +469,25 @@ CREATE TABLE "Task" (
         private val MIGRATION_20_21 = object : Migration(20, 21) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("Alter table rule add column title TEXT NOT NULL DEFAULT '' ")
+            }
+        }
+
+        //已拦截短信存档表（二次开发新增）
+        private val MIGRATION_21_22 = object : Migration(21, 22) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    """
+CREATE TABLE IF NOT EXISTS "SmsIntercepted" (
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "from" TEXT NOT NULL DEFAULT '',
+  "content" TEXT NOT NULL DEFAULT '',
+  "sim_info" TEXT NOT NULL DEFAULT '',
+  "sim_slot" INTEGER NOT NULL DEFAULT -1,
+  "time" INTEGER NOT NULL
+)
+""".trimIndent()
+                )
+                database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS \"index_SmsIntercepted_id\" ON \"SmsIntercepted\" ( \"id\" ASC)")
             }
         }
 
