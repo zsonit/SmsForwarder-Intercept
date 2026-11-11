@@ -681,6 +681,11 @@
     <string name="sms_intercept_tips">号码或关键词任一命中即拦截，无需同时满足（命中规则的短信不再转发）</string>
     <string name="sms_intercept_phones_hint">拦截号码：多个号码用逗号/分号分隔，发件人号码以任一号码结尾即拦截（可填完整号码或后几位）</string>
     <string name="sms_intercept_keywords_hint">拦截关键词：一行一个，支持正则表达式\n短信内容出现任一关键词即直接拦截</string>
+    <string name="sms_intercept_keyword_input_hint">输入关键词（支持正则表达式）</string>
+    <string name="sms_intercept_keyword_add">添加</string>
+    <string name="sms_intercept_keyword_empty">请先输入关键词</string>
+    <string name="sms_intercept_keyword_duplicate">该关键词已存在</string>
+    <string name="sms_intercept_keywords_count">已添加关键词（%d 条），点击右侧 ✕ 删除</string>
     <string name="sms_intercept_logs">记录拦截日志</string>
     <string name="sms_intercepted">已拦截（不转发）</string>
     <string name="sms_intercept_delete">可选：同时删除手机上的该条短信（默认不删除）</string>

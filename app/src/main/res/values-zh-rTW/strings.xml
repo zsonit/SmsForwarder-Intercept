@@ -681,6 +681,11 @@
     <string name="sms_intercept_tips">號碼或關鍵詞任一命中即攔截，無需同時滿足（命中規則的簡訊不再轉發）</string>
     <string name="sms_intercept_phones_hint">攔截號碼：多個號碼用逗號/分號分隔，發件人號碼以任一號碼結尾即攔截（可填完整號碼或後幾位）</string>
     <string name="sms_intercept_keywords_hint">攔截關鍵詞：一行一個，支持正則表達式\n簡訊內容出現任一關鍵詞即直接攔截</string>
+    <string name="sms_intercept_keyword_input_hint">輸入關鍵詞（支持正則表達式）</string>
+    <string name="sms_intercept_keyword_add">新增</string>
+    <string name="sms_intercept_keyword_empty">請先輸入關鍵詞</string>
+    <string name="sms_intercept_keyword_duplicate">該關鍵詞已存在</string>
+    <string name="sms_intercept_keywords_count">已新增關鍵詞（%d 條），點擊右側 ✕ 刪除</string>
     <string name="sms_intercept_logs">記錄攔截日誌</string>
     <string name="sms_intercepted">已攔截（不轉發）</string>
     <string name="sms_intercept_delete">可選：同時刪除手機上的該條簡訊（預設不刪除）</string>

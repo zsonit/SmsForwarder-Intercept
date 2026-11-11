@@ -680,6 +680,11 @@
     <string name="sms_intercept_tips">Intercepted if ANY rule matches (phone or keyword), no need for both; matched SMS will not be forwarded</string>
     <string name="sms_intercept_phones_hint">Intercept phones: separated by commas/semicolons; intercepted if the sender\'s number ends with any of them (full number or last digits)</string>
     <string name="sms_intercept_keywords_hint">Intercept keywords: one per line, regex supported\nDirectly intercepted if the message content contains any keyword</string>
+    <string name="sms_intercept_keyword_input_hint">Enter a keyword (regex supported)</string>
+    <string name="sms_intercept_keyword_add">Add</string>
+    <string name="sms_intercept_keyword_empty">Please enter a keyword first</string>
+    <string name="sms_intercept_keyword_duplicate">This keyword already exists</string>
+    <string name="sms_intercept_keywords_count">Added keywords (%d), tap ✕ to remove</string>
     <string name="sms_intercept_logs">Record intercepted messages</string>
     <string name="sms_intercepted">Intercepted (not forwarded)</string>
     <string name="sms_intercept_delete">Optional: also delete the message on this phone (not deleted by default)</string>
