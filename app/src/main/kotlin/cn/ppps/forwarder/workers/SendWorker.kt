@@ -56,10 +56,17 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                 //短信拦截规则：命中拦截号码或拦截关键词的短信不再转发（不影响自动任务以外的任何流程）
                 if (msgInfo.type == "sms" && SmsInterceptUtils.isIntercepted(msgInfo.from, msgInfo.content)) {
                     Log.e(TAG, "短信命中拦截规则，不转发：from = ${msgInfo.from}")
+                    var interceptResponse = ResUtils.getString(R.string.sms_intercepted)
+                    //同时删除手机上的该条短信
+                    if (SettingUtils.smsInterceptDelete) {
+                        val deletedCount = SmsInterceptUtils.deleteSmsFromInbox(applicationContext, msgInfo.from, msgInfo.content)
+                        Log.e(TAG, "删除本地短信：deletedCount = $deletedCount")
+                        if (deletedCount > 0) interceptResponse = ResUtils.getString(R.string.sms_intercept_deleted)
+                    }
                     if (SettingUtils.enableSmsInterceptLogs) {
                         val msg = Msg(0, msgInfo.type, msgInfo.from, msgInfo.content, msgInfo.simSlot, msgInfo.simInfo, msgInfo.subId, msgInfo.callType)
                         val msgId = Core.msg.insert(msg)
-                        val log = Logs(0, msgInfo.type, msgId, 0, 0, 0, ResUtils.getString(R.string.sms_intercepted))
+                        val log = Logs(0, msgInfo.type, msgId, 0, 0, 0, interceptResponse)
                         Core.logs.insert(log)
                     }
                     return@withContext Result.failure(workDataOf("send" to "intercepted"))

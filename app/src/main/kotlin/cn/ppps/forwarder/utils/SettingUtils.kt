@@ -59,6 +59,9 @@ class SettingUtils private constructor() {
         //短信拦截——拦截关键词（一行一个，支持正则，命中内容即命中）
         var smsInterceptKeywords: String by SharedPreference(SP_SMS_INTERCEPT_KEYWORDS, "")
 
+        //短信拦截——同时删除手机上的该条短信（安卓4.4+需将本应用设为默认短信应用才生效）
+        var smsInterceptDelete: Boolean by SharedPreference(SP_SMS_INTERCEPT_DELETE, false)
+
         //是否靠近听筒关屏
         var enableCloseToEarpieceTurnOffScreen: Boolean by SharedPreference(SP_ENABLE_CLOSE_TO_EARPIECE_TURN_OFF_SCREEN, false)
 

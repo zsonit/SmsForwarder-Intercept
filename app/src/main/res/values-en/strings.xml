@@ -677,11 +677,18 @@
     <string name="app_notify_blacklist_hint">One keyword per line, regex supported\nSkip forwarding if the title or content matches any keyword.</string>
     <!-- SMS intercept rules (secondary development) -->
     <string name="sms_intercept">SMS Intercept</string>
-    <string name="sms_intercept_tips">SMS matching the intercept rules will not be forwarded</string>
+    <string name="sms_intercept_tips">Intercepted if ANY rule matches (phone or keyword), no need for both; matched SMS will not be forwarded</string>
     <string name="sms_intercept_phones_hint">Intercept phones: separated by commas/semicolons; intercepted if the sender\'s number ends with any of them (full number or last digits)</string>
-    <string name="sms_intercept_keywords_hint">Intercept keywords: one per line, regex supported\nSkip forwarding if the message content matches any keyword</string>
+    <string name="sms_intercept_keywords_hint">Intercept keywords: one per line, regex supported\nDirectly intercepted if the message content contains any keyword</string>
     <string name="sms_intercept_logs">Record intercepted messages</string>
     <string name="sms_intercepted">Intercepted (not forwarded)</string>
+    <string name="sms_intercept_delete">Also delete the message on this phone</string>
+    <string name="sms_intercept_delete_tips">On Android 4.4+ this only works when this app is set as the default SMS app; deletion failure does not affect interception</string>
+    <string name="sms_intercept_deleted">Intercepted and deleted (not forwarded)</string>
+    <string name="sms_intercept_export">Export rules</string>
+    <string name="sms_intercept_import">Import rules</string>
+    <string name="sms_intercept_import_hint">Paste exported rules here; format: [phones] and [keywords] sections</string>
+    <string name="sms_intercept_import_success">Intercept rules imported</string>
     <string name="choose_app_hint">Drop-down selection to get package name, keyword fuzzy matching APP name</string>
     <string name="regex_multi_match" tools:ignore="TypographyDashes">^\\s*(AND|OR|and|or)\\s(IS|NOTIS)\\s(PHONE_NUM|PACKAGE_NAME|MSG_CONTENT|INFORM_CONTENT|INFORM_TITLE|CARD_SLOT|CALL_TYPE|UID)\\s(EQUALS|CONTAIN|NOT_CONTAIN|START_WITH|END_WITH|REGEX)\\s(.*)$</string>
     <string name="privacy_content_1">Welcome to</string>

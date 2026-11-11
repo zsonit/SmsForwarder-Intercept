@@ -1,5 +1,7 @@
 package cn.ppps.forwarder.utils
 
+import android.content.Context
+import android.provider.Telephony
 import com.xuexiang.xrouter.utils.TextUtils
 
 //短信拦截规则工具：命中号码黑名单或关键词黑名单的短信不再转发
@@ -47,5 +49,19 @@ object SmsInterceptUtils {
         }
 
         return false
+    }
+
+    //从系统短信收件箱删除指定短信（安卓4.4+要求本应用为默认短信应用，否则删除失败）
+    fun deleteSmsFromInbox(context: Context, from: String, content: String): Int {
+        return try {
+            val uri = Telephony.Sms.Inbox.CONTENT_URI
+            val selection = "${Telephony.Sms.ADDRESS} = ? AND ${Telephony.Sms.BODY} = ?"
+            val deletedCount = context.contentResolver.delete(uri, selection, arrayOf(from, content))
+            Log.i(TAG, "删除本地短信：from = $from, deletedCount = $deletedCount")
+            deletedCount
+        } catch (e: Exception) {
+            Log.e(TAG, "删除本地短信失败（需将本应用设为默认短信应用）：" + e.message.toString())
+            0
+        }
     }
 }

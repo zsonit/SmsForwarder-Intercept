@@ -678,11 +678,18 @@
     <string name="app_notify_blacklist_hint">一行一个关键词，支持正则表达式\n通知标题或内容命中任一关键词则不转发</string>
     <!-- 短信拦截规则（二次开发新增） -->
     <string name="sms_intercept">短信拦截</string>
-    <string name="sms_intercept_tips">命中拦截规则的短信不再转发</string>
+    <string name="sms_intercept_tips">号码或关键词任一命中即拦截，无需同时满足（命中规则的短信不再转发）</string>
     <string name="sms_intercept_phones_hint">拦截号码：多个号码用逗号/分号分隔，发件人号码以任一号码结尾即拦截（可填完整号码或后几位）</string>
-    <string name="sms_intercept_keywords_hint">拦截关键词：一行一个，支持正则表达式\n短信内容命中任一关键词则不转发</string>
+    <string name="sms_intercept_keywords_hint">拦截关键词：一行一个，支持正则表达式\n短信内容出现任一关键词即直接拦截</string>
     <string name="sms_intercept_logs">记录拦截日志</string>
     <string name="sms_intercepted">已拦截（不转发）</string>
+    <string name="sms_intercept_delete">同时删除手机上的该条短信</string>
+    <string name="sms_intercept_delete_tips">安卓4.4+需将本应用设为默认短信应用后删除才会生效，删除失败不影响拦截</string>
+    <string name="sms_intercept_deleted">已拦截并删除（不转发）</string>
+    <string name="sms_intercept_export">导出规则</string>
+    <string name="sms_intercept_import">导入规则</string>
+    <string name="sms_intercept_import_hint">粘贴导出的规则内容，格式：[phones]/[keywords] 两段</string>
+    <string name="sms_intercept_import_success">拦截规则已导入</string>
     <string name="choose_app_hint">下拉选择获取包名，关键字模糊匹配APP名称</string>
     <string name="regex_multi_match" tools:ignore="TypographyDashes">^\\s*(并且|或者)\\s(是|不是)\\s(手机号|APP包名|短信内容|通知内容|通知标题|卡槽信息|通话类型|UID)\\s(相等|包含|不包含|开头|结尾|正则匹配)\\s(.*)$</string>
     <string name="privacy_content_1">欢迎使用</string>

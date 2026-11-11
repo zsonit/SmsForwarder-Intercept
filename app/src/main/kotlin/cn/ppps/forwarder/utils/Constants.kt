@@ -62,6 +62,7 @@ const val SP_ENABLE_SMS_INTERCEPT = "enable_sms_intercept"
 const val SP_ENABLE_SMS_INTERCEPT_LOGS = "enable_sms_intercept_logs"
 const val SP_SMS_INTERCEPT_PHONES = "sms_intercept_phones"
 const val SP_SMS_INTERCEPT_KEYWORDS = "sms_intercept_keywords"
+const val SP_SMS_INTERCEPT_DELETE = "sms_intercept_delete"
 
 const val ENABLE_LOAD_APP_LIST = "enable_load_app_list"
 const val ENABLE_LOAD_USER_APP_LIST = "enable_load_user_app_list"

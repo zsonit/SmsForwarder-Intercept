@@ -149,6 +149,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         binding!!.scbSmsInterceptLogs.setOnCheckedChangeListener { _: SmoothCheckBox, isChecked: Boolean ->
             SettingUtils.enableSmsInterceptLogs = isChecked
         }
+        //同时删除手机上的短信
+        binding!!.scbSmsInterceptDelete.isChecked = SettingUtils.smsInterceptDelete
+        binding!!.scbSmsInterceptDelete.setOnCheckedChangeListener { _: SmoothCheckBox, isChecked: Boolean ->
+            SettingUtils.smsInterceptDelete = isChecked
+        }
+        //导出/导入拦截规则
+        binding!!.btnSmsInterceptExport.setOnClickListener { exportSmsInterceptRules() }
+        binding!!.btnSmsInterceptImport.setOnClickListener { importSmsInterceptRules() }
         //转发通话记录
         switchEnablePhone(binding!!.sbEnablePhone, binding!!.scbCallType1, binding!!.scbCallType2, binding!!.scbCallType3, binding!!.scbCallType4, binding!!.scbCallType5, binding!!.scbCallType6)
         //转发应用通知
@@ -852,6 +860,75 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
                 SettingUtils.smsInterceptKeywords = textKeywords.text.toString().trim().replace("\r", "").replace("\n+", "\n").removeSuffix("\n")
             }
         })
+    }
+
+    //组装拦截规则文本（二次开发新增）：[phones]/[keywords] 两段
+    private fun buildSmsInterceptRulesText(): String {
+        val sb = StringBuilder()
+        sb.append("[phones]\n").append(SettingUtils.smsInterceptPhones).append("\n")
+        sb.append("[keywords]\n").append(SettingUtils.smsInterceptKeywords)
+        return sb.toString()
+    }
+
+    //解析拦截规则文本（二次开发新增）
+    private fun parseSmsInterceptRules(text: String) {
+        var section = ""
+        val phones = StringBuilder()
+        val keywords = StringBuilder()
+        for (line in text.lines()) {
+            val trimmed = line.trim()
+            when {
+                trimmed == "[phones]" -> section = "phones"
+                trimmed == "[keywords]" -> section = "keywords"
+                section == "phones" -> {
+                    if (phones.isNotEmpty()) phones.append("\n")
+                    phones.append(trimmed)
+                }
+                section == "keywords" -> {
+                    if (keywords.isNotEmpty()) keywords.append("\n")
+                    keywords.append(trimmed)
+                }
+            }
+        }
+        SettingUtils.smsInterceptPhones = phones.toString()
+        SettingUtils.smsInterceptKeywords = keywords.toString()
+        //刷新输入框显示
+        binding!!.etSmsInterceptPhones.setText(SettingUtils.smsInterceptPhones)
+        binding!!.etSmsInterceptKeywords.setText(SettingUtils.smsInterceptKeywords)
+    }
+
+    //导出拦截规则（通过系统分享，二次开发新增）
+    private fun exportSmsInterceptRules() {
+        try {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, buildSmsInterceptRulesText())
+            startActivity(Intent.createChooser(intent, getString(R.string.sms_intercept_export)))
+        } catch (e: Exception) {
+            XToastUtils.error(e.message.toString())
+        }
+    }
+
+    //导入拦截规则（粘贴解析，二次开发新增）
+    private fun importSmsInterceptRules() {
+        try {
+            val editText = EditText(requireContext())
+            editText.hint = getString(R.string.sms_intercept_import_hint)
+            editText.setText(buildSmsInterceptRulesText())
+            editText.minLines = 4
+            editText.gravity = android.view.Gravity.TOP
+            android.app.AlertDialog.Builder(requireContext())
+                .setTitle(R.string.sms_intercept_import)
+                .setView(editText)
+                .setPositiveButton(R.string.confirm) { _, _ ->
+                    parseSmsInterceptRules(editText.text.toString())
+                    XToastUtils.info(getString(R.string.sms_intercept_import_success))
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+                .show()
+        } catch (e: Exception) {
+            XToastUtils.error(e.message.toString())
+        }
     }
 
     //启动时异步获取已安装App信息
