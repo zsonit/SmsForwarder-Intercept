@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:textColor="?attr/xui_config_color_subtitle_text"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="@dimen/text_size_small"
         tools:ignore="SmallSp" />
 
