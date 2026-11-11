@@ -97,7 +97,7 @@ class SmsInterceptedFragment : BaseFragment<FragmentSmsInterceptedBinding?>() {
     //按发件人筛选
     private fun showFilterDialog() {
         if (allRecords.isEmpty()) {
-            XToastUtils.info(getString(R.string.sms_intercepted_empty))
+            XXToastUtils.info(getString(R.string.sms_intercepted_empty))
             return
         }
         val senders = allRecords.map { it.from }.distinct()
@@ -136,7 +136,7 @@ class SmsInterceptedFragment : BaseFragment<FragmentSmsInterceptedBinding?>() {
             .positiveText(R.string.sms_intercepted_copy)
             .onPositive { _: MaterialDialog?, _: DialogAction? ->
                 ClipboardUtils.copyText(record.content)
-                ToastUtils.info(getString(R.string.sms_intercepted_copied_toast))
+                XToastUtils.info(getString(R.string.sms_intercepted_copied_toast))
             }
             .negativeText(R.string.cancel)
             .show()
@@ -154,7 +154,7 @@ class SmsInterceptedFragment : BaseFragment<FragmentSmsInterceptedBinding?>() {
                 lifecycleScope.launch {
                     Core.smsIntercepted.delete(record.id)
                     loadRecords()
-                    XToastUtils.info(getString(R.string.sms_intercepted_deleted_toast))
+                    XXToastUtils.info(getString(R.string.sms_intercepted_deleted_toast))
                 }
             }
             .show()
@@ -171,7 +171,7 @@ class SmsInterceptedFragment : BaseFragment<FragmentSmsInterceptedBinding?>() {
                     Core.smsIntercepted.deleteAll()
                     currentFilter = null
                     loadRecords()
-                    XToastUtils.info(getString(R.string.sms_intercepted_cleared_toast))
+                    XXToastUtils.info(getString(R.string.sms_intercepted_cleared_toast))
                 }
             }
             .show()
