@@ -698,6 +698,8 @@
     <string name="sms_intercepted_clear_confirm">確定清空所有攔截記錄?</string>
     <string name="sms_intercepted_cleared_toast">攔截記錄已清空！</string>
     <string name="btn_sms_intercepted_view">查看已攔截</string>
+    <string name="sms_intercept_sim_slot">攔截生效卡槽</string>
+    <string name="sms_intercept_sim_slot_all">全部卡槽</string>
     <string name="choose_app_hint">下拉選擇獲取包名，關鍵字模糊匹配APP名稱</string>
     <string name="regex_multi_match" tools:ignore="TypographyDashes">^\\s*(並且|或者)\\s(是|不是)\\s(手機號|APP包名|簡訊內容|通知內容|通知標題|卡槽信息|通話類型|UID)\\s(相等|包含|不包含|開頭|結尾|正則匹配)\\s(.*)$</string>
     <string name="privacy_content_1">歡迎使用</string>

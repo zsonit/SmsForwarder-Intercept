@@ -10,8 +10,13 @@ object SmsInterceptUtils {
     private const val TAG: String = "SmsInterceptUtils"
 
     //是否命中拦截规则
-    fun isIntercepted(from: String, content: String): Boolean {
+    fun isIntercepted(from: String, content: String, simSlot: Int = -1): Boolean {
         if (!SettingUtils.enableSmsIntercept) return false
+
+        //卡槽生效范围：ALL=不分卡槽；SIM1/SIM2=仅对应卡槽的短信才检查拦截规则（卡槽未知时不拦截，避免误拦）
+        val scope = SettingUtils.smsInterceptSimSlot
+        if (scope == "SIM1" && simSlot != 0) return false
+        if (scope == "SIM2" && simSlot != 1) return false
 
         //号码黑名单：逗号/分号分隔（兼容中英文），发件人号码以任一拦截号码结尾即命中（便于匹配含+86前缀的号码）
         if (!TextUtils.isEmpty(SettingUtils.smsInterceptPhones)) {

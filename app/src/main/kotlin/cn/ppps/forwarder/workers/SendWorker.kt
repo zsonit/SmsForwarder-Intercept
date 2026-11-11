@@ -55,7 +55,7 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                 val simSlot = "SIM" + (msgInfo.simSlot + 1)
 
                 //短信拦截规则：命中拦截号码或拦截关键词的短信不再转发（不影响自动任务以外的任何流程）
-                if (msgInfo.type == "sms" && SmsInterceptUtils.isIntercepted(msgInfo.from, msgInfo.content)) {
+                if (msgInfo.type == "sms" && SmsInterceptUtils.isIntercepted(msgInfo.from, msgInfo.content, msgInfo.simSlot)) {
                     Log.e(TAG, "短信命中拦截规则，不转发：from = ${msgInfo.from}")
                     var interceptResponse = ResUtils.getString(R.string.sms_intercepted)
                     //同时删除手机上的该条短信

@@ -159,6 +159,19 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         binding!!.btnSmsInterceptImport.setOnClickListener { importSmsInterceptRules() }
         //查看已拦截短信
         binding!!.btnSmsInterceptedView.setOnClickListener { openNewPage(SmsInterceptedFragment::class.java) }
+        //拦截生效卡槽
+        when (SettingUtils.smsInterceptSimSlot) {
+            "SIM1" -> binding!!.rbSmsInterceptSim1.isChecked = true
+            "SIM2" -> binding!!.rbSmsInterceptSim2.isChecked = true
+            else -> binding!!.rbSmsInterceptSimAll.isChecked = true
+        }
+        binding!!.rgSmsInterceptSimSlot.setOnCheckedChangeListener { _, checkedId ->
+            SettingUtils.smsInterceptSimSlot = when (checkedId) {
+                R.id.rb_sms_intercept_sim1 -> "SIM1"
+                R.id.rb_sms_intercept_sim2 -> "SIM2"
+                else -> "ALL"
+            }
+        }
         //转发通话记录
         switchEnablePhone(binding!!.sbEnablePhone, binding!!.scbCallType1, binding!!.scbCallType2, binding!!.scbCallType3, binding!!.scbCallType4, binding!!.scbCallType5, binding!!.scbCallType6)
         //转发应用通知

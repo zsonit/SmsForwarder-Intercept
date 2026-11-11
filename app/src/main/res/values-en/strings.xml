@@ -697,6 +697,8 @@
     <string name="sms_intercepted_clear_confirm">Clear all intercepted records?</string>
     <string name="sms_intercepted_cleared_toast">Intercepted records have been cleared!</string>
     <string name="btn_sms_intercepted_view">View intercepted</string>
+    <string name="sms_intercept_sim_slot">Effective SIM slot</string>
+    <string name="sms_intercept_sim_slot_all">All slots</string>
     <string name="choose_app_hint">Drop-down selection to get package name, keyword fuzzy matching APP name</string>
     <string name="regex_multi_match" tools:ignore="TypographyDashes">^\\s*(AND|OR|and|or)\\s(IS|NOTIS)\\s(PHONE_NUM|PACKAGE_NAME|MSG_CONTENT|INFORM_CONTENT|INFORM_TITLE|CARD_SLOT|CALL_TYPE|UID)\\s(EQUALS|CONTAIN|NOT_CONTAIN|START_WITH|END_WITH|REGEX)\\s(.*)$</string>
     <string name="privacy_content_1">Welcome to</string>

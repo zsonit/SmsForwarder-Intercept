@@ -193,6 +193,50 @@
                     android:textSize="@dimen/text_size_mini"
                     tools:ignore="SmallSp" />
 
+                <!-- 拦截规则生效卡槽（二次开发新增）：可选不分卡槽 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sms_intercept_sim_slot"
+                        android:textSize="@dimen/text_size_small"
+                        tools:ignore="SmallSp" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_sms_intercept_sim_slot"
+                        style="@style/rg_style"
+                        android:layout_marginStart="5dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_sms_intercept_sim_all"
+                            style="@style/rg_rb_style_wrap"
+                            android:checked="true"
+                            android:text="@string/sms_intercept_sim_slot_all"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <RadioButton
+                            android:id="@+id/rb_sms_intercept_sim1"
+                            style="@style/rg_rb_style_wrap"
+                            android:text="@string/sim1"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <RadioButton
+                            android:id="@+id/rb_sms_intercept_sim2"
+                            style="@style/rg_rb_style_wrap"
+                            android:text="@string/sim2"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
                 <!-- 导出/导入拦截规则（二次开发新增） -->
                 <LinearLayout
                     android:layout_width="match_parent"
