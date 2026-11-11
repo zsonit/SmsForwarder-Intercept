@@ -682,8 +682,8 @@
     <string name="sms_intercept_keywords_hint">Intercept keywords: one per line, regex supported\nDirectly intercepted if the message content contains any keyword</string>
     <string name="sms_intercept_logs">Record intercepted messages</string>
     <string name="sms_intercepted">Intercepted (not forwarded)</string>
-    <string name="sms_intercept_delete">Also delete the message on this phone</string>
-    <string name="sms_intercept_delete_tips">On Android 4.4+ this only works when this app is set as the default SMS app; deletion failure does not affect interception</string>
+    <string name="sms_intercept_delete">Optional: also delete the message on this phone (not deleted by default)</string>
+    <string name="sms_intercept_delete_tips">Interception only blocks forwarding and never touches system SMS; deletion is attempted only when checked. On Android 4.4+ set this app as the default SMS app; deletion failure does not affect interception</string>
     <string name="sms_intercept_deleted">Intercepted and deleted (not forwarded)</string>
     <string name="sms_intercept_export">Export rules</string>
     <string name="sms_intercept_import">Import rules</string>

@@ -683,8 +683,8 @@
     <string name="sms_intercept_keywords_hint">拦截关键词：一行一个，支持正则表达式\n短信内容出现任一关键词即直接拦截</string>
     <string name="sms_intercept_logs">记录拦截日志</string>
     <string name="sms_intercepted">已拦截（不转发）</string>
-    <string name="sms_intercept_delete">同时删除手机上的该条短信</string>
-    <string name="sms_intercept_delete_tips">安卓4.4+需将本应用设为默认短信应用后删除才会生效，删除失败不影响拦截</string>
+    <string name="sms_intercept_delete">可选：同时删除手机上的该条短信（默认不删除）</string>
+    <string name="sms_intercept_delete_tips">仅拦截转发不动系统短信；勾选后才尝试删除，安卓4.4+需将本应用设为默认短信应用，删除失败不影响拦截</string>
     <string name="sms_intercept_deleted">已拦截并删除（不转发）</string>
     <string name="sms_intercept_export">导出规则</string>
     <string name="sms_intercept_import">导入规则</string>

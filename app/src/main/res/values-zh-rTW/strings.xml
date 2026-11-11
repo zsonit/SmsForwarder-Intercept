@@ -683,8 +683,8 @@
     <string name="sms_intercept_keywords_hint">攔截關鍵詞：一行一個，支持正則表達式\n簡訊內容出現任一關鍵詞即直接攔截</string>
     <string name="sms_intercept_logs">記錄攔截日誌</string>
     <string name="sms_intercepted">已攔截（不轉發）</string>
-    <string name="sms_intercept_delete">同時刪除手機上的該條簡訊</string>
-    <string name="sms_intercept_delete_tips">安卓4.4+需將本應用設為預設簡訊應用後刪除才會生效，刪除失敗不影響攔截</string>
+    <string name="sms_intercept_delete">可選：同時刪除手機上的該條簡訊（預設不刪除）</string>
+    <string name="sms_intercept_delete_tips">僅攔截轉發不動系統簡訊；勾選後才嘗試刪除，安卓4.4+需將本應用設為預設簡訊應用，刪除失敗不影響攔截</string>
     <string name="sms_intercept_deleted">已攔截並刪除（不轉發）</string>
     <string name="sms_intercept_export">匯出規則</string>
     <string name="sms_intercept_import">匯入規則</string>
