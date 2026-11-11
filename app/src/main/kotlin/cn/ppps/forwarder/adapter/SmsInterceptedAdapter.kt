@@ -16,6 +16,7 @@ import java.util.Locale
 @Suppress("DEPRECATION")
 class SmsInterceptedAdapter(
     var itemList: MutableList<SmsIntercepted>,
+    private val itemClickListener: ((Int) -> Unit)? = null,
     private val deleteClickListener: ((Int) -> Unit)? = null,
 ) : RecyclerView.Adapter<SmsInterceptedAdapter.ViewHolder>() {
 
@@ -49,6 +50,9 @@ class SmsInterceptedAdapter(
             tvFrom.text = item.from
             tvTime.text = dateFormat.format(item.time)
             tvContent.text = item.content
+            itemView.setOnClickListener {
+                itemClickListener?.invoke(bindingAdapterPosition)
+            }
             ivDelete.setOnClickListener {
                 deleteClickListener?.invoke(bindingAdapterPosition)
             }
