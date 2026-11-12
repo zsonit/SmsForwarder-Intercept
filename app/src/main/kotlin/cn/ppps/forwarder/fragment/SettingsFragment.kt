@@ -148,9 +148,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         switchEnableDiagnosticLog(binding!!.sbEnableDiagnosticLog)
         //运行日志（诊断）：查看短信接收与转发匹配过程
         binding!!.menuDiagnosticLog.setOnClickListener { openNewPage(LogcatFragment::class.java) }
-        //拦截号码/拦截关键词：分别进入二级页面管理
+        //拦截号码/拦截关键词/白名单：分别进入二级页面管理
         binding!!.menuSmsInterceptPhones.setOnClickListener { openNewPage(SmsInterceptPhonesFragment::class.java) }
         binding!!.menuSmsInterceptKeywords.setOnClickListener { openNewPage(SmsInterceptKeywordsFragment::class.java) }
+        binding!!.menuSmsInterceptWhitelist.setOnClickListener { openNewPage(SmsInterceptWhitelistFragment::class.java) }
         binding!!.scbSmsInterceptLogs.isChecked = SettingUtils.enableSmsInterceptLogs
         binding!!.scbSmsInterceptLogs.setOnCheckedChangeListener { _: SmoothCheckBox, isChecked: Boolean ->
             SettingUtils.enableSmsInterceptLogs = isChecked
@@ -163,8 +164,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         //导出/导入拦截规则
         binding!!.btnSmsInterceptExport.setOnClickListener { exportSmsInterceptRules() }
         binding!!.btnSmsInterceptImport.setOnClickListener { importSmsInterceptRules() }
-        //查看已拦截短信
-        binding!!.btnSmsInterceptedView.setOnClickListener { openNewPage(SmsInterceptedFragment::class.java) }
+        //已拦截短信记录已并入「转发日志」页（第 4 个分类），此处不再单独提供入口
         //拦截生效卡槽
         when (SettingUtils.smsInterceptSimSlot) {
             "SIM1" -> binding!!.rbSmsInterceptSim1.isChecked = true
@@ -267,10 +267,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
                 .split("\n").map { it.trim() }.count { it.isNotEmpty() }
             val keywordsCount = SettingUtils.smsInterceptKeywords
                 .split("\n").map { it.trim() }.count { it.isNotEmpty() }
+            val whitelistCount = SettingUtils.smsInterceptWhitelist
+                .split("\n").map { it.trim() }.count { it.isNotEmpty() }
             binding!!.tvMenuSmsInterceptPhonesSub.text =
                 getString(R.string.menu_sms_intercept_phones_count, phonesCount)
             binding!!.tvMenuSmsInterceptKeywordsSub.text =
                 getString(R.string.menu_sms_intercept_keywords_count, keywordsCount)
+            binding!!.tvMenuSmsInterceptWhitelistSub.text =
+                getString(R.string.menu_sms_intercept_whitelist_count, whitelistCount)
         }
     }
 
@@ -897,11 +901,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         }
     }
 
-    //组装拦截规则文本（二次开发新增）：[phones]/[keywords] 两段
+    //组装拦截规则文本（二次开发新增）：[phones]/[keywords]/[whitelist] 三段
     private fun buildSmsInterceptRulesText(): String {
         val sb = StringBuilder()
         sb.append("[phones]\n").append(SettingUtils.smsInterceptPhones).append("\n")
-        sb.append("[keywords]\n").append(SettingUtils.smsInterceptKeywords)
+        sb.append("[keywords]\n").append(SettingUtils.smsInterceptKeywords).append("\n")
+        sb.append("[whitelist]\n").append(SettingUtils.smsInterceptWhitelist)
         return sb.toString()
     }
 
@@ -910,11 +915,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         var section = ""
         val phones = StringBuilder()
         val keywords = StringBuilder()
+        val whitelist = StringBuilder()
         for (line in text.lines()) {
             val trimmed = line.trim()
             when {
                 trimmed == "[phones]" -> section = "phones"
                 trimmed == "[keywords]" -> section = "keywords"
+                trimmed == "[whitelist]" -> section = "whitelist"
                 section == "phones" -> {
                     if (phones.isNotEmpty()) phones.append("\n")
                     phones.append(trimmed)
@@ -923,10 +930,16 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
                     if (keywords.isNotEmpty()) keywords.append("\n")
                     keywords.append(trimmed)
                 }
+                section == "whitelist" -> {
+                    if (whitelist.isNotEmpty()) whitelist.append("\n")
+                    whitelist.append(trimmed)
+                }
             }
         }
         SettingUtils.smsInterceptPhones = phones.toString()
         SettingUtils.smsInterceptKeywords = keywords.toString()
+        //旧版导出文件没有 [whitelist] 段，此时保留现有白名单不被清空
+        if (whitelist.isNotEmpty()) SettingUtils.smsInterceptWhitelist = whitelist.toString()
     }
 
     //导出拦截规则（通过系统分享，二次开发新增）

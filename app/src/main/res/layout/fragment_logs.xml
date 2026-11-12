@@ -45,4 +45,89 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+    <!-- 已拦截短信记录（二次开发新增：由设置页并入转发日志页） -->
+    <LinearLayout
+        android:id="@+id/layout_intercepted"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/tv_intercepted_stats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_small"
+                tools:ignore="SmallSp" />
+
+            <Button
+                android:id="@+id/btn_intercepted_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:text="@string/sms_intercepted_filter"
+                android:textSize="@dimen/text_size_small"
+                tools:ignore="SmallSp" />
+
+            <Button
+                android:id="@+id/btn_intercepted_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:minWidth="0dp"
+                android:text="@string/sms_intercepted_clear"
+                android:textSize="@dimen/text_size_small"
+                tools:ignore="SmallSp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="5dp"
+            android:text="@string/sms_intercepted_keep_tips"
+            android:textSize="@dimen/text_size_mini"
+            tools:ignore="SmallSp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_intercepted"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:paddingBottom="@dimen/config_padding_10dp"
+                tools:listitem="@layout/adapter_sms_intercepted_item" />
+
+            <TextView
+                android:id="@+id/tv_intercepted_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/sms_intercepted_empty"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="gone"
+                tools:ignore="SmallSp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

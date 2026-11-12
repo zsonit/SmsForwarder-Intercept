@@ -1343,4 +1343,12 @@
     <string name="diagnostic_log_off">运行日志已关闭</string>
     <string name="diagnostic_log_off_tips">运行日志已关闭，可在设置中开启后查看收信与转发过程</string>
     <string name="sms_intercepted_keep_tips">仅保留最近 24 小时的拦截记录，超时自动清空</string>
+    <string name="menu_sms_intercept_whitelist">拦截白名单</string>
+    <string name="sms_intercept_whitelist_tips">白名单优先：号码或短信内容命中白名单时，即使命中拦截规则也照常转发（号码按结尾匹配，内容支持关键词/正则）</string>
+    <string name="sms_intercept_whitelist_input_hint">输入号码或内容关键词</string>
+    <string name="sms_intercept_whitelist_count">共 %1$d 条（号码或内容任一命中即放行）</string>
+    <string name="sms_intercept_whitelist_empty">请输入号码或内容关键词</string>
+    <string name="sms_intercept_whitelist_duplicate">该白名单已存在</string>
+    <string name="type_param_intercepted">已拦截</string>
+    <string name="menu_sms_intercept_whitelist_count">拦截白名单（%d 条），点击进入管理</string>
 </resources>

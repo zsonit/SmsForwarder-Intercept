@@ -13,6 +13,9 @@ object SmsInterceptUtils {
     fun isIntercepted(from: String, content: String, simSlot: Int = -1): Boolean {
         if (!SettingUtils.enableSmsIntercept) return false
 
+        //白名单优先（二次开发新增）：号码或内容命中白名单直接放行，不再走拦截规则
+        if (isWhitelisted(from, content)) return false
+
         //卡槽生效范围：ALL=不分卡槽；SIM1/SIM2=仅对应卡槽的短信才检查拦截规则（卡槽未知时不拦截，避免误拦）
         val scope = SettingUtils.smsInterceptSimSlot
         if (scope == "SIM1" && simSlot != 0) return false
@@ -53,6 +56,40 @@ object SmsInterceptUtils {
             }
         }
 
+        return false
+    }
+
+    /**
+     * 是否命中白名单（二次开发新增）
+     * 白名单同时支持两种写法，任一命中即放行：
+     * 1) 号码：发件人号码以该内容结尾（如 95588、+8613800138000、13800138000）
+     * 2) 内容：短信正文包含该内容（支持正则，非法正则降级为包含匹配）
+     */
+    fun isWhitelisted(from: String, content: String): Boolean {
+        if (TextUtils.isEmpty(SettingUtils.smsInterceptWhitelist)) return false
+        for (line in SettingUtils.smsInterceptWhitelist.split("\n")) {
+            val item = line.trim()
+            if (item.isEmpty()) continue
+
+            //号码优先：发件人号码以白名单项结尾即命中（白名单项本身也可以是号码片段）
+            if (from.endsWith(item)) {
+                Log.i(TAG, "命中白名单（号码）：from = $from, whitelist = $item")
+                return true
+            }
+
+            //内容匹配：支持正则，非法正则降级为包含匹配
+            try {
+                if (Regex(item).containsMatchIn(content)) {
+                    Log.i(TAG, "命中白名单（内容）：whitelist = $item")
+                    return true
+                }
+            } catch (e: Exception) {
+                if (content.contains(item)) {
+                    Log.i(TAG, "命中白名单（内容，包含匹配）：whitelist = $item")
+                    return true
+                }
+            }
+        }
         return false
     }
 

@@ -1312,4 +1312,12 @@
     <string name="diagnostic_log_off">Diagnostic log disabled</string>
     <string name="diagnostic_log_off_tips">Diagnostic log is disabled. Enable it in settings to view the receive/forward flow</string>
     <string name="sms_intercepted_keep_tips">Only records from the last 24 hours are kept; older records are cleared automatically</string>
+    <string name="menu_sms_intercept_whitelist">Intercept whitelist</string>
+    <string name="sms_intercept_whitelist_tips">Whitelist takes priority: if the sender number or message content matches, the SMS is forwarded normally even when it hits an intercept rule (number matched by suffix, content supports keywords/regex)</string>
+    <string name="sms_intercept_whitelist_input_hint">Enter a number or content keyword</string>
+    <string name="sms_intercept_whitelist_count">%1$d item(s) — any match is allowed through</string>
+    <string name="sms_intercept_whitelist_empty">Please enter a number or content keyword</string>
+    <string name="sms_intercept_whitelist_duplicate">This whitelist entry already exists</string>
+    <string name="type_param_intercepted">Intercepted</string>
+    <string name="menu_sms_intercept_whitelist_count">Intercept whitelist (%d), tap to manage</string>
 </resources>

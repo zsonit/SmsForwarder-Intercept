@@ -70,6 +70,8 @@ const val SP_SMS_INTERCEPT_PHONES = "sms_intercept_phones"
 const val SP_SMS_INTERCEPT_KEYWORDS = "sms_intercept_keywords"
 const val SP_SMS_INTERCEPT_DELETE = "sms_intercept_delete"
 const val SP_SMS_INTERCEPT_SIM_SLOT = "sms_intercept_sim_slot"
+//拦截白名单（号码或内容命中即放行，优先于拦截规则）
+const val SP_SMS_INTERCEPT_WHITELIST = "sms_intercept_whitelist"
 
 const val ENABLE_LOAD_APP_LIST = "enable_load_app_list"
 const val ENABLE_LOAD_USER_APP_LIST = "enable_load_user_app_list"

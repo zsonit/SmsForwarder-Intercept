@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/config_margin_10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sms_intercept_whitelist_tips"
+                android:textSize="@dimen/text_size_mini"
+                tools:ignore="SmallSp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+                    android:id="@+id/et_whitelist_input"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/sms_intercept_whitelist_input_hint"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    app:met_clearButton="true"
+                    tools:ignore="TextContrastCheck" />
+
+                <Button
+                    android:id="@+id/btn_whitelist_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/sms_intercept_keyword_add" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_whitelist_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/text_size_mini"
+                tools:ignore="SmallSp" />
+
+            <LinearLayout
+                android:id="@+id/layout_whitelist_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

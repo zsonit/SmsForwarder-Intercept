@@ -71,6 +71,8 @@
         <item>@string/type_param_sms</item>
         <item>@string/type_param_call</item>
         <item>@string/type_param_app</item>
+        <!--二次开发新增：已拦截短信记录并入转发日志页-->
+        <item>@string/type_param_intercepted</item>
     </string-array>
 
     <!--启用状态-->

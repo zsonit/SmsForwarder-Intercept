@@ -261,6 +261,37 @@
 
                 </LinearLayout>
 
+                <!-- 拦截白名单入口（二级页面，二次开发新增） -->
+                <LinearLayout
+                    android:id="@+id/menu_sms_intercept_whitelist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:minHeight="48dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <TextView
+                        android:id="@+id/tv_menu_sms_intercept_whitelist_sub"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/menu_sms_intercept_whitelist"
+                        android:textSize="@dimen/text_size_small"
+                        tools:ignore="SmallSp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/menu_sms_intercept_whitelist"
+                        android:src="@drawable/icon_arrow_right_grey" />
+
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -384,13 +415,6 @@
                         android:text="@string/sms_intercept_import" />
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_sms_intercepted_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/btn_sms_intercepted_view" />
 
             </LinearLayout>
 

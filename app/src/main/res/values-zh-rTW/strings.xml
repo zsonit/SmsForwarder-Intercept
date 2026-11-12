@@ -1314,4 +1314,12 @@
     <string name="diagnostic_log_off">執行日誌已關閉</string>
     <string name="diagnostic_log_off_tips">執行日誌已關閉，可在設定中開啟後查看收信與轉發過程</string>
     <string name="sms_intercepted_keep_tips">僅保留最近 24 小時的攔截記錄，超時自動清空</string>
+    <string name="menu_sms_intercept_whitelist">攔截白名單</string>
+    <string name="sms_intercept_whitelist_tips">白名單優先：號碼或簡訊內容命中白名單時，即使命中攔截規則也照常轉發（號碼按結尾匹配，內容支援關鍵字/正則）</string>
+    <string name="sms_intercept_whitelist_input_hint">輸入號碼或內容關鍵字</string>
+    <string name="sms_intercept_whitelist_count">共 %1$d 條（號碼或內容任一命中即放行）</string>
+    <string name="sms_intercept_whitelist_empty">請輸入號碼或內容關鍵字</string>
+    <string name="sms_intercept_whitelist_duplicate">該白名單已存在</string>
+    <string name="type_param_intercepted">已攔截</string>
+    <string name="menu_sms_intercept_whitelist_count">攔截白名單（%d 條），點擊進入管理</string>
 </resources>

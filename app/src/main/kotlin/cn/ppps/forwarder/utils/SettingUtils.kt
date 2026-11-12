@@ -68,6 +68,9 @@ class SettingUtils private constructor() {
         //短信拦截——生效卡槽：ALL=不分卡槽，SIM1/SIM2=仅对应卡槽生效
         var smsInterceptSimSlot: String by SharedPreference(SP_SMS_INTERCEPT_SIM_SLOT, CHECK_SIM_SLOT_ALL)
 
+        //短信拦截——白名单（一行一个，号码或内容命中任意一项即放行，优先于拦截规则）
+        var smsInterceptWhitelist: String by SharedPreference(SP_SMS_INTERCEPT_WHITELIST, "")
+
         //是否靠近听筒关屏
         var enableCloseToEarpieceTurnOffScreen: Boolean by SharedPreference(SP_ENABLE_CLOSE_TO_EARPIECE_TURN_OFF_SCREEN, false)
 
