@@ -54,11 +54,8 @@ class XUpdateInit private constructor() {
          * 进行版本更新检查
          */
         fun checkUpdate(context: Context, needErrorTip: Boolean, joinPreviewProgram: Boolean) {
-            if (joinPreviewProgram) {
-                checkUpdate(context, KEY_PREVIEW_URL, needErrorTip)
-            } else {
-                checkUpdate(context, KEY_UPDATE_URL, needErrorTip)
-            }
+            // 二次开发版：禁用应用内自动更新检查，避免下载原版签名 APK 导致安装冲突
+            return
         }
 
         /**
