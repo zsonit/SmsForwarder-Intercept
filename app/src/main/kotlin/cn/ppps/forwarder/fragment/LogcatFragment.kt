@@ -50,6 +50,15 @@ class LogcatFragment : BaseFragment<FragmentLogcatBinding?>() {
                 binding!!.tvLogcat.text = ""
             }
         })
+        //二次开发：手动刷新（收到新短信后可立即查看诊断日志）
+        titleBar.addAction(object : TitleBar.ImageAction(R.drawable.ic_refresh) {
+            @SingleClick
+            override fun performAction(view: View) {
+                binding!!.tvLogcat.text = ""
+                readLog(false)
+                XToastUtils.success(R.string.log_refreshed)
+            }
+        })
         return titleBar
     }
 
@@ -67,7 +76,8 @@ class LogcatFragment : BaseFragment<FragmentLogcatBinding?>() {
         lst.add("-v")
         lst.add("time")
         lst.add("-s")
-        lst.add("GoLog,cn.ppps.forwarder.ForegroundService,cn.ppps.forwarder.server.ServerService")
+        //二次开发：补充短信接收/转发链路的关键日志标签，便于排查"短信没转发"问题
+        lst.add("GoLog,cn.ppps.forwarder.ForegroundService,cn.ppps.forwarder.server.ServerService,SmsReceiver,SendWorker,SendUtils,ActionWorker,Logger")
         Observable.create { emitter: ObservableEmitter<String?> ->
             if (flush) {
                 val lst2: HashSet<String> = LinkedHashSet()

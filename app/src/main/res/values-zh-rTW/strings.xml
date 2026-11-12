@@ -1304,4 +1304,7 @@
     <string name="start_discovery">搜索裝置</string>
     <string name="invalid_bluetooth_mac_address">藍牙裝置MAC地址無效，例如：AA:BB:CC:DD:EE:FF</string>
     <string name="auto_start_redmi"><![CDATA[紅米手機：授權管理 -> 自啟動管理 -> 允許應用自啟動]]></string>
+    <string name="menu_diagnostic_log">執行日誌（診斷）</string>
+    <string name="menu_diagnostic_log_tips">查看簡訊接收與轉發匹配過程，排查「收不到/不轉發」</string>
+    <string name="log_refreshed">已重新整理</string>
 </resources>

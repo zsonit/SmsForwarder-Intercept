@@ -144,6 +144,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         switchEnableSms(binding!!.sbEnableSms)
         //短信拦截规则
         switchEnableSmsIntercept(binding!!.sbEnableSmsIntercept, binding!!.layoutSmsIntercept)
+        //运行日志（诊断）：查看短信接收与转发匹配过程
+        binding!!.menuDiagnosticLog.setOnClickListener { openNewPage(LogcatFragment::class.java) }
         //拦截号码/拦截关键词：分别进入二级页面管理
         binding!!.menuSmsInterceptPhones.setOnClickListener { openNewPage(SmsInterceptPhonesFragment::class.java) }
         binding!!.menuSmsInterceptKeywords.setOnClickListener { openNewPage(SmsInterceptKeywordsFragment::class.java) }

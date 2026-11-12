@@ -72,6 +72,46 @@
 
             </LinearLayout>
 
+            <!-- 运行日志（诊断）入口（二次开发新增） -->
+            <LinearLayout
+                android:id="@+id/menu_diagnostic_log"
+                style="@style/BarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/menu_diagnostic_log"
+                        tools:ignore="RelativeOverlap" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/menu_diagnostic_log_tips"
+                        android:textSize="@dimen/text_size_mini"
+                        tools:ignore="SmallSp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="@string/menu_diagnostic_log"
+                    android:src="@drawable/icon_arrow_right_grey" />
+
+            </LinearLayout>
+
             <!-- 短信拦截规则开关（二次开发新增） -->
             <LinearLayout
                 style="@style/BarStyle.Switch"

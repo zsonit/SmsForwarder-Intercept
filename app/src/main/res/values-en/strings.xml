@@ -1302,4 +1302,7 @@
     <string name="start_discovery">Discovery</string>
     <string name="invalid_bluetooth_mac_address">Bluetooth Mac Address is invalid, eg. AA:BB:CC:DD:EE:FF</string>
     <string name="auto_start_redmi"><![CDATA[RedMi: Authorization Management -> Self-Start Management -> Allow Apps to Self-Start]]></string>
+    <string name="menu_diagnostic_log">Diagnostic log</string>
+    <string name="menu_diagnostic_log_tips">View SMS receive and forward matching logs</string>
+    <string name="log_refreshed">Refreshed</string>
 </resources>

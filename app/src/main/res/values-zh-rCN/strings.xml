@@ -1303,4 +1303,7 @@
     <string name="start_discovery">搜索设备</string>
     <string name="invalid_bluetooth_mac_address">蓝牙设备MAC地址无效，例如：AA:BB:CC:DD:EE:FF</string>
     <string name="auto_start_redmi"><![CDATA[红米手机：授权管理 -> 自启动管理 -> 允许应用自启动]]></string>
+    <string name="menu_diagnostic_log">运行日志（诊断）</string>
+    <string name="menu_diagnostic_log_tips">查看短信接收与转发匹配过程，排查“收不到/不转发”</string>
+    <string name="log_refreshed">已刷新</string>
 </resources>

@@ -29,15 +29,23 @@ class SmsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         try {
+            Log.i(TAG, "===== 收到广播：action=${intent.action} =====")
+
             //纯客户端模式
-            if (SettingUtils.enablePureClientMode) return
+            if (SettingUtils.enablePureClientMode) {
+                Log.e(TAG, "纯客户端模式已开启，忽略短信广播（如需转发请在客户端设置里关闭纯客户端模式）")
+                return
+            }
 
             //过滤广播
             if (intent.action != Telephony.Sms.Intents.SMS_RECEIVED_ACTION
                 && intent.action != Telephony.Sms.Intents.SMS_DELIVER_ACTION
                 && intent.action != Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION
                 && intent.action != Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION
-            ) return
+            ) {
+                Log.d(TAG, "非短信广播action，忽略：${intent.action}")
+                return
+            }
 
             if (intent.action == Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION || intent.action == Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION) {
                 val contentType = intent.type
@@ -69,7 +77,14 @@ class SmsReceiver : BroadcastReceiver() {
             }
 
             //总开关
-            if (!SettingUtils.enableSms) return
+            if (!SettingUtils.enableSms) {
+                Log.e(TAG, "短信转发总开关未开启（设置→转发短信广播），已忽略：from=$from, msg=$msg")
+                return
+            }
+            if (msg.isBlank()) {
+                Log.e(TAG, "解析到的短信内容为空，忽略：from=$from")
+                return
+            }
 
             //TODO：准确获取卡槽信息，目前测试结果只有 subscription 相对靠谱
             val slot = intent.extras?.getInt("slot") ?: -1
@@ -115,6 +130,7 @@ class SmsReceiver : BroadcastReceiver() {
                 )
             ).build()
             WorkManager.getInstance(context).enqueue(request)
+            Log.i(TAG, "已提交转发任务：from=$from, simSlot=$simSlot(slot=$slot, subscription=$subscription), simInfo=$simInfo")
 
         } catch (e: Exception) {
             Log.e(TAG, "Parsing SMS failed: " + e.message.toString())

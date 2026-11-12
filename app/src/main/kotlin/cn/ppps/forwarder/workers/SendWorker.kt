@@ -51,6 +51,7 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                 }
 
                 val msgInfo = Gson().fromJson(msgInfoJson, MsgInfo::class.java)
+                Log.i(TAG, "开始处理：type=${msgInfo.type}, from=${msgInfo.from}, simSlot=${msgInfo.simSlot}")
                 //【注意】卡槽id：-1=获取失败、0=卡槽1、1=卡槽2，但是 Rule 表里存的是 SIM1/SIM2
                 val simSlot = "SIM" + (msgInfo.simSlot + 1)
 
@@ -113,8 +114,10 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
 
                 val ruleList: List<Rule> = Core.rule.getRuleList(msgInfo.type, 1, simSlot)
                 if (ruleList.isEmpty()) {
+                    Log.e(TAG, "没有启用中的转发规则：type=${msgInfo.type}, simSlot=$simSlot（规则未启用/未勾选短信条件/卡槽不匹配）")
                     return@withContext Result.failure(workDataOf("send" to "failed"))
                 }
+                Log.i(TAG, "匹配到启用中的规则数量=${ruleList.size}, type=${msgInfo.type}, simSlot=$simSlot, from=${msgInfo.from}")
 
                 val ruleListMatched: MutableList<Rule> = mutableListOf()
                 for (rule in ruleList) {
@@ -122,8 +125,10 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                     if (rule.checkMsg(msgInfo)) ruleListMatched.add(rule)
                 }
                 if (ruleListMatched.isEmpty()) {
+                    Log.e(TAG, "规则条件均未匹配该短信（检查规则里的号码/关键字/卡槽条件）：from=${msgInfo.from}, content=${msgInfo.content}")
                     return@withContext Result.failure(workDataOf("send" to "failed"))
                 }
+                Log.i(TAG, "命中规则数量=${ruleListMatched.size}，开始发送")
 
                 val msg = Msg(0, msgInfo.type, msgInfo.from, msgInfo.content, msgInfo.simSlot, msgInfo.simInfo, msgInfo.subId, msgInfo.callType)
                 val msgId = Core.msg.insert(msg)

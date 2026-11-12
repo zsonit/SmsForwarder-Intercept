@@ -47,7 +47,8 @@ object Log {
             throw IllegalStateException("Log not initialized. Call init(context) first.")
         }
 
-        if (!App.isDebug) return
+        //二次开发：正式包也写入日志文件（cache/logs/log_日期.txt），便于用户导出排查"短信不转发"问题
+        //注意：文件位于应用缓存目录，可被系统或用户清理，不会无限增长
 
         Thread {
             try {
