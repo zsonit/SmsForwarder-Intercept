@@ -66,6 +66,10 @@ class LogcatFragment : BaseFragment<FragmentLogcatBinding?>() {
     }
 
     override fun initListeners() {
+        //二次开发：运行日志开关关闭时给出提示，避免误以为"没有日志"
+        if (!Log.isEnabled()) {
+            XToastUtils.warning(R.string.diagnostic_log_off_tips)
+        }
         readLog(false)
     }
 

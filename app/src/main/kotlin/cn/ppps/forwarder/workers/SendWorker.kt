@@ -76,6 +76,8 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                         Core.smsIntercepted.insert(
                             SmsIntercepted(0, msgInfo.from, msgInfo.content, msgInfo.simInfo, msgInfo.simSlot)
                         )
+                        //仅保留最近 24 小时的拦截记录，超时自动清空
+                        Core.smsIntercepted.deleteExpired()
                     } catch (e: Exception) {
                         Log.e(TAG, "已拦截短信存档失败：" + e.message.toString())
                     }

@@ -40,8 +40,20 @@ object Log {
         }
     }
 
+    /**
+     * 运行日志（诊断）开关：关闭后不再记录收信/转发等过程日志，仅保留错误级(E)日志，
+     * 既省电省空间又避免刷屏，需要排查时可在设置中重新打开。
+     */
+    fun isEnabled(): Boolean = try {
+        SettingUtils.enableDiagnosticLog
+    } catch (e: Throwable) {
+        true
+    }
+
     fun logToFile(level: String, tag: String, message: String) {
         if (Build.DEVICE == null) return
+        //关闭运行日志后不再写入文件
+        if (!isEnabled()) return
         
         if (!::appContext.isInitialized) {
             throw IllegalStateException("Log not initialized. Call init(context) first.")
@@ -70,50 +82,59 @@ object Log {
     }
 
     fun v(tag: String, message: String) {
+        if (!isEnabled()) return
         AndroidLog.v(tag, message)
         logToFile("V", tag, message)
     }
 
     fun v(tag: String, message: String, throwable: Throwable) {
+        if (!isEnabled()) return
         val logMessage = "${message}\n${getStackTraceString(throwable)}"
         AndroidLog.v(tag, logMessage)
         logToFile("V", tag, logMessage)
     }
 
     fun d(tag: String, message: String) {
+        if (!isEnabled()) return
         AndroidLog.d(tag, message)
         logToFile("D", tag, message)
     }
 
     fun d(tag: String, message: String, throwable: Throwable) {
+        if (!isEnabled()) return
         val logMessage = "${message}\n${getStackTraceString(throwable)}"
         AndroidLog.d(tag, logMessage)
         logToFile("D", tag, logMessage)
     }
 
     fun i(tag: String, message: String) {
+        if (!isEnabled()) return
         AndroidLog.d(tag, message)
         logToFile("I", tag, message)
     }
 
     fun i(tag: String, message: String, throwable: Throwable) {
+        if (!isEnabled()) return
         val logMessage = "${message}\n${getStackTraceString(throwable)}"
         AndroidLog.d(tag, logMessage)
         logToFile("I", tag, logMessage)
     }
 
     fun w(tag: String, message: String) {
+        if (!isEnabled()) return
         AndroidLog.w(tag, message)
         logToFile("W", tag, message)
     }
 
     fun w(tag: String, throwable: Throwable) {
+        if (!isEnabled()) return
         val logMessage = getStackTraceString(throwable)
         AndroidLog.w(tag, logMessage)
         logToFile("W", tag, logMessage)
     }
 
     fun w(tag: String, message: String, throwable: Throwable) {
+        if (!isEnabled()) return
         val logMessage = "${message}\n${getStackTraceString(throwable)}"
         AndroidLog.w(tag, logMessage)
         logToFile("W", tag, logMessage)
@@ -131,17 +152,20 @@ object Log {
     }
 
     fun wtf(tag: String, message: String) {
+        if (!isEnabled()) return
         AndroidLog.wtf(tag, message)
         logToFile("WTF", tag, message)
     }
 
     fun wtf(tag: String, throwable: Throwable) {
+        if (!isEnabled()) return
         val logMessage = getStackTraceString(throwable)
         AndroidLog.wtf(tag, logMessage)
         logToFile("WTF", tag, logMessage)
     }
 
     fun wtf(tag: String, message: String, throwable: Throwable) {
+        if (!isEnabled()) return
         val logMessage = "${message}\n${getStackTraceString(throwable)}"
         AndroidLog.wtf(tag, logMessage)
         logToFile("WTF", tag, logMessage)
@@ -156,6 +180,7 @@ object Log {
     }
 
     fun println(priority: Int, tag: String, message: String) {
+        if (!isEnabled()) return
         AndroidLog.println(priority, tag, message)
         logToFile("P", tag, message)
     }

@@ -57,6 +57,12 @@ const val SP_ENABLE_SMS_COMMAND = "enable_sms_command"
 const val SP_ENABLE_CLOSE_TO_EARPIECE_TURN_OFF_SCREEN = "enable_close_2_earpiece_turn_off_screen"
 const val SP_SMS_COMMAND_SAFE_PHONE = "sms_command_safe_phone"
 
+//运行日志（诊断）开关
+const val SP_ENABLE_DIAGNOSTIC_LOG = "enable_diagnostic_log"
+
+//已拦截短信记录保留时长（小时）：超时自动清空
+const val SMS_INTERCEPTED_KEEP_HOURS = 24
+
 //短信拦截规则
 const val SP_ENABLE_SMS_INTERCEPT = "enable_sms_intercept"
 const val SP_ENABLE_SMS_INTERCEPT_LOGS = "enable_sms_intercept_logs"

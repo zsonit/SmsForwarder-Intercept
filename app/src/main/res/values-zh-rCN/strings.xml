@@ -1306,4 +1306,11 @@
     <string name="menu_diagnostic_log">运行日志（诊断）</string>
     <string name="menu_diagnostic_log_tips">查看短信接收与转发匹配过程，排查“收不到/不转发”</string>
     <string name="log_refreshed">已刷新</string>
+    <string name="diagnostic_log_switch">运行日志</string>
+    <string name="diagnostic_log_switch_tips">开启后记录短信接收与转发全过程，便于排查问题</string>
+    <string name="diagnostic_log_switch_tips_off">已关闭：仅保留错误日志，不再记录收信与转发过程</string>
+    <string name="diagnostic_log_on">运行日志已开启</string>
+    <string name="diagnostic_log_off">运行日志已关闭</string>
+    <string name="diagnostic_log_off_tips">运行日志已关闭，可在设置中开启后查看收信与转发过程</string>
+    <string name="sms_intercepted_keep_tips">仅保留最近 24 小时的拦截记录，超时自动清空</string>
 </resources>

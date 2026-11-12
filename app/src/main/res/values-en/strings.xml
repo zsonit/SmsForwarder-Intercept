@@ -1305,4 +1305,11 @@
     <string name="menu_diagnostic_log">Diagnostic log</string>
     <string name="menu_diagnostic_log_tips">View SMS receive and forward matching logs</string>
     <string name="log_refreshed">Refreshed</string>
+    <string name="diagnostic_log_switch">Diagnostic log</string>
+    <string name="diagnostic_log_switch_tips">Record the full SMS receive and forwarding flow for troubleshooting</string>
+    <string name="diagnostic_log_switch_tips_off">Disabled: only error logs are kept</string>
+    <string name="diagnostic_log_on">Diagnostic log enabled</string>
+    <string name="diagnostic_log_off">Diagnostic log disabled</string>
+    <string name="diagnostic_log_off_tips">Diagnostic log is disabled. Enable it in settings to view the receive/forward flow</string>
+    <string name="sms_intercepted_keep_tips">Only records from the last 24 hours are kept; older records are cleared automatically</string>
 </resources>

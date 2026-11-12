@@ -12,6 +12,7 @@ import cn.ppps.forwarder.core.BaseFragment
 import cn.ppps.forwarder.core.Core
 import cn.ppps.forwarder.database.entity.SmsIntercepted
 import cn.ppps.forwarder.databinding.FragmentSmsInterceptedBinding
+import cn.ppps.forwarder.utils.Log
 import cn.ppps.forwarder.utils.XToastUtils
 import com.xuexiang.xaop.annotation.SingleClick
 import com.xuexiang.xpage.annotation.Page
@@ -21,7 +22,9 @@ import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
 import com.xuexiang.xutil.system.ClipboardUtils
 import com.xuexiang.xutil.tip.ToastUtils
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -75,6 +78,14 @@ class SmsInterceptedFragment : BaseFragment<FragmentSmsInterceptedBinding?>() {
 
     private fun loadRecords() {
         lifecycleScope.launch {
+            //超时清理（二次开发新增）：只保留最近 24 小时的拦截记录
+            withContext(Dispatchers.IO) {
+                try {
+                    Core.smsIntercepted.deleteExpired()
+                } catch (e: Exception) {
+                    Log.e("SmsIntercepted", "清理过期拦截记录失败：" + e.message.toString())
+                }
+            }
             allRecords = Core.smsIntercepted.getAll()
 
             //统计：累计拦截条数 + 今日拦截条数

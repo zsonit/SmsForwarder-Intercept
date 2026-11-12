@@ -339,6 +339,14 @@ class App : Application(), CactusCallback, Configuration.Provider by Core {
         // 初始化日志打印
         isDebug = SettingUtils.enableDebugMode
         Log.init(applicationContext)
+        // 清理过期的已拦截短信记录（二次开发新增：仅保留最近 24 小时）
+        Thread {
+            try {
+                Core.smsIntercepted.deleteExpired()
+            } catch (e: Exception) {
+                Log.e(TAG, "清理过期拦截记录失败：" + e.message.toString())
+            }
+        }.start()
         // 转发历史工具类初始化
         HistoryUtils.init(applicationContext)
         // 版本更新初始化

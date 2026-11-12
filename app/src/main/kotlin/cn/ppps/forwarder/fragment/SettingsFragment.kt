@@ -144,6 +144,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         switchEnableSms(binding!!.sbEnableSms)
         //短信拦截规则
         switchEnableSmsIntercept(binding!!.sbEnableSmsIntercept, binding!!.layoutSmsIntercept)
+        //运行日志（诊断）开关：单独控制是否记录收信/转发过程
+        switchEnableDiagnosticLog(binding!!.sbEnableDiagnosticLog)
         //运行日志（诊断）：查看短信接收与转发匹配过程
         binding!!.menuDiagnosticLog.setOnClickListener { openNewPage(LogcatFragment::class.java) }
         //拦截号码/拦截关键词：分别进入二级页面管理
@@ -258,6 +260,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         initAppSpinner()
         //刷新拦截号码/关键词入口的计数显示
         if (initViewsFinished && binding != null) {
+            //刷新运行日志开关的说明文字（状态可能在别处被重置）
+            updateDiagnosticLogTips()
             val phonesCount = SettingUtils.smsInterceptPhones
                 .replace(";", "\n").replace("；", "\n").replace("，", "\n").replace(",", "\n")
                 .split("\n").map { it.trim() }.count { it.isNotEmpty() }
@@ -856,6 +860,30 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
                 SettingUtils.appNotifyBlacklist = textBlacklist.text.toString().trim().replace("\r", "").replace("\n+", "\n").removeSuffix("\n")
             }
         })
+    }
+
+    //运行日志（诊断）开关（二次开发新增）
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private fun switchEnableDiagnosticLog(sbEnableDiagnosticLog: SwitchButton) {
+        sbEnableDiagnosticLog.isChecked = SettingUtils.enableDiagnosticLog
+        updateDiagnosticLogTips()
+        sbEnableDiagnosticLog.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            SettingUtils.enableDiagnosticLog = isChecked
+            updateDiagnosticLogTips()
+            if (isChecked) {
+                XToastUtils.success(R.string.diagnostic_log_on)
+            } else {
+                XToastUtils.info(R.string.diagnostic_log_off)
+            }
+        }
+    }
+
+    //刷新运行日志开关的副标题，让当前状态一眼可见（二次开发新增）
+    private fun updateDiagnosticLogTips() {
+        binding?.tvDiagnosticLogTips?.text = getString(
+            if (SettingUtils.enableDiagnosticLog) R.string.diagnostic_log_switch_tips
+            else R.string.diagnostic_log_switch_tips_off
+        )
     }
 
     //短信拦截规则开关（二次开发新增）

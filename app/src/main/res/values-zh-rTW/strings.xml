@@ -1307,4 +1307,11 @@
     <string name="menu_diagnostic_log">執行日誌（診斷）</string>
     <string name="menu_diagnostic_log_tips">查看簡訊接收與轉發匹配過程，排查「收不到/不轉發」</string>
     <string name="log_refreshed">已重新整理</string>
+    <string name="diagnostic_log_switch">執行日誌</string>
+    <string name="diagnostic_log_switch_tips">開啟後記錄簡訊接收與轉發全過程，便於排查問題</string>
+    <string name="diagnostic_log_switch_tips_off">已關閉：僅保留錯誤日誌，不再記錄收信與轉發過程</string>
+    <string name="diagnostic_log_on">執行日誌已開啟</string>
+    <string name="diagnostic_log_off">執行日誌已關閉</string>
+    <string name="diagnostic_log_off_tips">執行日誌已關閉，可在設定中開啟後查看收信與轉發過程</string>
+    <string name="sms_intercepted_keep_tips">僅保留最近 24 小時的攔截記錄，超時自動清空</string>
 </resources>

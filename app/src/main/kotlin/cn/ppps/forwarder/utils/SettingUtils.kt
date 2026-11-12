@@ -47,6 +47,9 @@ class SettingUtils private constructor() {
         var enableSmsCommand: Boolean by SharedPreference(SP_ENABLE_SMS_COMMAND, false)
         var smsCommandSafePhone: String by SharedPreference(SP_SMS_COMMAND_SAFE_PHONE, "")
 
+        //是否记录运行日志（诊断）：关闭后只保留错误级日志，不再记录收信/转发过程
+        var enableDiagnosticLog: Boolean by SharedPreference(SP_ENABLE_DIAGNOSTIC_LOG, true)
+
         //是否启用短信拦截规则（命中拦截规则的短信不再转发）
         var enableSmsIntercept: Boolean by SharedPreference(SP_ENABLE_SMS_INTERCEPT, false)
 

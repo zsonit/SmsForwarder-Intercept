@@ -38,6 +38,17 @@
 
     </LinearLayout>
 
+    <!-- 保留策略提示（二次开发新增） -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:text="@string/sms_intercepted_keep_tips"
+        android:textSize="@dimen/text_size_mini"
+        tools:ignore="SmallSp" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
