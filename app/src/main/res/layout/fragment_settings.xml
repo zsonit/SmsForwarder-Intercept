@@ -120,9 +120,9 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <!-- 自定义拦截规则入口（二级页面，二次开发新增） -->
+                <!-- 拦截号码入口（二级页面，二次开发新增） -->
                 <LinearLayout
-                    android:id="@+id/menu_sms_intercept_rules"
+                    android:id="@+id/menu_sms_intercept_phones"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
@@ -133,34 +133,51 @@
                     android:paddingBottom="8dp"
                     tools:ignore="UseCompoundDrawables">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_menu_sms_intercept_phones_sub"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/menu_sms_intercept_rules"
-                            android:textSize="@dimen/text_size_small"
-                            tools:ignore="SmallSp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/menu_sms_intercept_rules_sub"
-                            android:textColor="?android:attr/textColorSecondary"
-                            android:textSize="@dimen/text_size_mini"
-                            tools:ignore="SmallSp" />
-
-                    </LinearLayout>
+                        android:text="@string/menu_sms_intercept_phones"
+                        android:textSize="@dimen/text_size_small"
+                        tools:ignore="SmallSp" />
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginStart="8dp"
-                        android:contentDescription="@string/menu_sms_intercept_rules"
+                        android:contentDescription="@string/menu_sms_intercept_phones"
+                        android:src="@drawable/icon_arrow_right_grey" />
+
+                </LinearLayout>
+
+                <!-- 拦截关键词入口（二级页面，二次开发新增） -->
+                <LinearLayout
+                    android:id="@+id/menu_sms_intercept_keywords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:minHeight="48dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <TextView
+                        android:id="@+id/tv_menu_sms_intercept_keywords_sub"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/menu_sms_intercept_keywords"
+                        android:textSize="@dimen/text_size_small"
+                        tools:ignore="SmallSp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/menu_sms_intercept_keywords"
                         android:src="@drawable/icon_arrow_right_grey" />
 
                 </LinearLayout>

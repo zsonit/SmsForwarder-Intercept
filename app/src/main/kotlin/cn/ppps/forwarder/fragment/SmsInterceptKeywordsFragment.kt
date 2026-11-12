@@ -7,39 +7,28 @@ import android.widget.ImageView
 import android.widget.TextView
 import cn.ppps.forwarder.R
 import cn.ppps.forwarder.core.BaseFragment
-import cn.ppps.forwarder.databinding.FragmentSmsInterceptRulesBinding
+import cn.ppps.forwarder.databinding.FragmentSmsInterceptKeywordsBinding
 import cn.ppps.forwarder.utils.SettingUtils
 import cn.ppps.forwarder.utils.XToastUtils
 import com.xuexiang.xpage.annotation.Page
 import com.xuexiang.xui.widget.actionbar.TitleBar
 
-//自定义拦截规则（二次开发新增）：二级页面管理拦截号码与拦截关键词
-@Page(name = "自定义拦截规则")
-class SmsInterceptRulesFragment : BaseFragment<FragmentSmsInterceptRulesBinding?>() {
+//拦截关键词（二次开发新增）：二级页面逐条添加/删除拦截关键词，支持正则表达式
+@Page(name = "拦截关键词")
+class SmsInterceptKeywordsFragment : BaseFragment<FragmentSmsInterceptKeywordsBinding?>() {
 
     override fun viewBindingInflate(
         inflater: LayoutInflater,
         container: ViewGroup,
-    ): FragmentSmsInterceptRulesBinding {
-        return FragmentSmsInterceptRulesBinding.inflate(inflater, container, false)
+    ): FragmentSmsInterceptKeywordsBinding {
+        return FragmentSmsInterceptKeywordsBinding.inflate(inflater, container, false)
     }
 
     override fun initTitle(): TitleBar? {
-        return super.initTitle()!!.setImmersive(false).setTitle(R.string.menu_sms_intercept_rules)
+        return super.initTitle()!!.setImmersive(false).setTitle(R.string.menu_sms_intercept_keywords)
     }
 
     override fun initViews() {
-        //拦截号码：修改即保存
-        binding!!.etInterceptPhones.setText(SettingUtils.smsInterceptPhones)
-        binding!!.etInterceptPhones.addTextChangedListener(object : android.text.TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: android.text.Editable) {
-                SettingUtils.smsInterceptPhones = s.toString().trim()
-            }
-        })
-
-        //拦截关键词：逐条添加式管理
         binding!!.btnInterceptKeywordAdd.setOnClickListener {
             val input = binding!!.etInterceptKeywordInput.text?.toString()?.trim() ?: ""
             if (input.isEmpty()) {
@@ -61,7 +50,6 @@ class SmsInterceptRulesFragment : BaseFragment<FragmentSmsInterceptRulesBinding?
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
-        binding!!.etInterceptPhones.setText(SettingUtils.smsInterceptPhones)
         refreshKeywordsList()
     }
 

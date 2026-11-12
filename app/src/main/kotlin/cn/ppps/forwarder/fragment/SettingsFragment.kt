@@ -144,8 +144,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         switchEnableSms(binding!!.sbEnableSms)
         //短信拦截规则
         switchEnableSmsIntercept(binding!!.sbEnableSmsIntercept, binding!!.layoutSmsIntercept)
-        //自定义拦截规则：进入二级页面管理号码与关键词
-        binding!!.menuSmsInterceptRules.setOnClickListener { openNewPage(SmsInterceptRulesFragment::class.java) }
+        //拦截号码/拦截关键词：分别进入二级页面管理
+        binding!!.menuSmsInterceptPhones.setOnClickListener { openNewPage(SmsInterceptPhonesFragment::class.java) }
+        binding!!.menuSmsInterceptKeywords.setOnClickListener { openNewPage(SmsInterceptKeywordsFragment::class.java) }
         binding!!.scbSmsInterceptLogs.isChecked = SettingUtils.enableSmsInterceptLogs
         binding!!.scbSmsInterceptLogs.setOnCheckedChangeListener { _: SmoothCheckBox, isChecked: Boolean ->
             SettingUtils.enableSmsInterceptLogs = isChecked
@@ -253,6 +254,18 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         super.onResume()
         //初始化APP下拉列表
         initAppSpinner()
+        //刷新拦截号码/关键词入口的计数显示
+        if (initViewsFinished && binding != null) {
+            val phonesCount = SettingUtils.smsInterceptPhones
+                .replace(";", "\n").replace("；", "\n").replace("，", "\n").replace(",", "\n")
+                .split("\n").map { it.trim() }.count { it.isNotEmpty() }
+            val keywordsCount = SettingUtils.smsInterceptKeywords
+                .split("\n").map { it.trim() }.count { it.isNotEmpty() }
+            binding!!.tvMenuSmsInterceptPhonesSub.text =
+                getString(R.string.menu_sms_intercept_phones_count, phonesCount)
+            binding!!.tvMenuSmsInterceptKeywordsSub.text =
+                getString(R.string.menu_sms_intercept_keywords_count, keywordsCount)
+        }
     }
 
     override fun initListeners() {

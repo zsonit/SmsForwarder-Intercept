@@ -682,8 +682,14 @@
     <string name="sms_intercept_phones_hint">攔截號碼：多個號碼用逗號/分號分隔，發件人號碼以任一號碼結尾即攔截（可填完整號碼或後幾位）</string>
     <string name="sms_intercept_keywords_hint">攔截關鍵詞：一行一個，支持正則表達式\n簡訊內容出現任一關鍵詞即直接攔截</string>
     <string name="sms_intercept_keyword_input_hint">輸入關鍵詞（支持正則表達式）</string>
-    <string name="menu_sms_intercept_rules">自定義攔截規則</string>
-    <string name="menu_sms_intercept_rules_sub">攔截號碼與攔截關鍵詞，點擊進入管理</string>
+    <string name="menu_sms_intercept_phones">攔截號碼</string>
+    <string name="menu_sms_intercept_phones_count">攔截號碼（%d 個），點擊進入管理</string>
+    <string name="menu_sms_intercept_keywords">攔截關鍵詞</string>
+    <string name="menu_sms_intercept_keywords_count">攔截關鍵詞（%d 條），點擊進入管理</string>
+    <string name="sms_intercept_phone_input_hint">輸入號碼（完整號碼或後幾位均可）</string>
+    <string name="sms_intercept_phone_empty">請先輸入號碼</string>
+    <string name="sms_intercept_phone_duplicate">該號碼已存在</string>
+    <string name="sms_intercept_phones_count">已新增號碼（%d 個），點擊右側 ✕ 刪除</string>
     <string name="sms_intercept_phones_title">攔截號碼</string>
     <string name="sms_intercept_keywords_title">攔截關鍵詞</string>
     <string name="sms_intercept_keyword_add">新增</string>
