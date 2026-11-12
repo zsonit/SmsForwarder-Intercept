@@ -681,6 +681,10 @@
     <string name="sms_intercept_phones_hint">Intercept phones: separated by commas/semicolons; intercepted if the sender\'s number ends with any of them (full number or last digits)</string>
     <string name="sms_intercept_keywords_hint">Intercept keywords: one per line, regex supported\nDirectly intercepted if the message content contains any keyword</string>
     <string name="sms_intercept_keyword_input_hint">Enter a keyword (regex supported)</string>
+    <string name="menu_sms_intercept_rules">Custom intercept rules</string>
+    <string name="menu_sms_intercept_rules_sub">Manage intercept phones and keywords, tap to enter</string>
+    <string name="sms_intercept_phones_title">Intercept phones</string>
+    <string name="sms_intercept_keywords_title">Intercept keywords</string>
     <string name="sms_intercept_keyword_add">Add</string>
     <string name="sms_intercept_keyword_empty">Please enter a keyword first</string>
     <string name="sms_intercept_keyword_duplicate">This keyword already exists</string>

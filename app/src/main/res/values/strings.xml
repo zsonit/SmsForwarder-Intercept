@@ -712,6 +712,10 @@
     <string name="sms_intercept_phones_hint">拦截号码：多个号码用逗号/分号分隔，发件人号码以任一号码结尾即拦截（可填完整号码或后几位）</string>
     <string name="sms_intercept_keywords_hint">拦截关键词：一行一个，支持正则表达式\n短信内容出现任一关键词即直接拦截</string>
     <string name="sms_intercept_keyword_input_hint">输入关键词（支持正则表达式）</string>
+    <string name="menu_sms_intercept_rules">自定义拦截规则</string>
+    <string name="menu_sms_intercept_rules_sub">拦截号码与拦截关键词，点击进入管理</string>
+    <string name="sms_intercept_phones_title">拦截号码</string>
+    <string name="sms_intercept_keywords_title">拦截关键词</string>
     <string name="sms_intercept_keyword_add">添加</string>
     <string name="sms_intercept_keyword_empty">请先输入关键词</string>
     <string name="sms_intercept_keyword_duplicate">该关键词已存在</string>

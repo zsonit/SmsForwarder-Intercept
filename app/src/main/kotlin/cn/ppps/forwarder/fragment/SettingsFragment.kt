@@ -144,8 +144,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         switchEnableSms(binding!!.sbEnableSms)
         //短信拦截规则
         switchEnableSmsIntercept(binding!!.sbEnableSmsIntercept, binding!!.layoutSmsIntercept)
-        editSmsInterceptPhones(binding!!.etSmsInterceptPhones)
-        setupSmsInterceptKeywordsList()
+        //自定义拦截规则：进入二级页面管理号码与关键词
+        binding!!.menuSmsInterceptRules.setOnClickListener { openNewPage(SmsInterceptRulesFragment::class.java) }
         binding!!.scbSmsInterceptLogs.isChecked = SettingUtils.enableSmsInterceptLogs
         binding!!.scbSmsInterceptLogs.setOnCheckedChangeListener { _: SmoothCheckBox, isChecked: Boolean ->
             SettingUtils.enableSmsInterceptLogs = isChecked
@@ -854,60 +854,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         }
     }
 
-    //设置短信拦截号码（二次开发新增）
-    private fun editSmsInterceptPhones(textPhones: EditText) {
-        textPhones.setText(SettingUtils.smsInterceptPhones)
-        textPhones.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                SettingUtils.smsInterceptPhones = textPhones.text.toString().trim()
-            }
-        })
-    }
-
-    //短信拦截关键词——逐条添加式管理（二次开发新增）
-    private fun setupSmsInterceptKeywordsList() {
-        binding!!.btnSmsInterceptKeywordAdd.setOnClickListener {
-            val input = binding!!.etSmsInterceptKeywordInput.text?.toString()?.trim() ?: ""
-            if (input.isEmpty()) {
-                XToastUtils.warning(getString(R.string.sms_intercept_keyword_empty))
-                return@setOnClickListener
-            }
-            val current = SettingUtils.smsInterceptKeywords
-            if (current.split("\n").any { it.trim() == input }) {
-                XToastUtils.warning(getString(R.string.sms_intercept_keyword_duplicate))
-                binding!!.etSmsInterceptKeywordInput.setText("")
-                return@setOnClickListener
-            }
-            SettingUtils.smsInterceptKeywords = if (current.isEmpty()) input else "$current\n$input"
-            binding!!.etSmsInterceptKeywordInput.setText("")
-            refreshSmsInterceptKeywordsList()
-        }
-        refreshSmsInterceptKeywordsList()
-    }
-
-    //刷新关键词逐条列表（二次开发新增）
-    private fun refreshSmsInterceptKeywordsList() {
-        val container = binding!!.layoutSmsInterceptKeywordsList
-        container.removeAllViews()
-        val keywords = SettingUtils.smsInterceptKeywords.split("\n").map { it.trim() }.filter { it.isNotEmpty() }
-        binding!!.tvSmsInterceptKeywordsCount.text = getString(R.string.sms_intercept_keywords_count, keywords.size)
-        if (keywords.isEmpty()) return
-        val inflater = LayoutInflater.from(requireContext())
-        for (keyword in keywords) {
-            val row = inflater.inflate(R.layout.item_sms_intercept_keyword, container, false) as ViewGroup
-            row.findViewById<TextView>(R.id.tv_keyword).text = keyword
-            row.findViewById<ImageView>(R.id.iv_delete).setOnClickListener {
-                val remain = SettingUtils.smsInterceptKeywords.split("\n").map { it.trim() }
-                    .filter { it.isNotEmpty() && it != keyword }
-                SettingUtils.smsInterceptKeywords = remain.joinToString("\n")
-                refreshSmsInterceptKeywordsList()
-            }
-            container.addView(row)
-        }
-    }
-
     //组装拦截规则文本（二次开发新增）：[phones]/[keywords] 两段
     private fun buildSmsInterceptRulesText(): String {
         val sb = StringBuilder()
@@ -938,9 +884,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding?>(), View.OnClickL
         }
         SettingUtils.smsInterceptPhones = phones.toString()
         SettingUtils.smsInterceptKeywords = keywords.toString()
-        //刷新输入框显示
-        binding!!.etSmsInterceptPhones.setText(SettingUtils.smsInterceptPhones)
-        refreshSmsInterceptKeywordsList()
     }
 
     //导出拦截规则（通过系统分享，二次开发新增）

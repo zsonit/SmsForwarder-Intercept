@@ -120,53 +120,50 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
-                    android:id="@+id/et_sms_intercept_phones"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/sms_intercept_phones_hint"
-                    android:inputType="text"
-                    app:met_clearButton="true"
-                    tools:ignore="TextContrastCheck" />
-
+                <!-- 自定义拦截规则入口（二级页面，二次开发新增） -->
                 <LinearLayout
+                    android:id="@+id/menu_sms_intercept_rules"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:minHeight="48dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    tools:ignore="UseCompoundDrawables">
 
-                    <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
-                        android:id="@+id/et_sms_intercept_keyword_input"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="@string/sms_intercept_keyword_input_hint"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        app:met_clearButton="true"
-                        tools:ignore="TextContrastCheck" />
+                        android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/btn_sms_intercept_keyword_add"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="@string/sms_intercept_keyword_add" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/menu_sms_intercept_rules"
+                            android:textSize="@dimen/text_size_small"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/menu_sms_intercept_rules_sub"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="@dimen/text_size_mini"
+                            tools:ignore="SmallSp" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/menu_sms_intercept_rules"
+                        android:src="@drawable/icon_arrow_right_grey" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_sms_intercept_keywords_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_mini"
-                    tools:ignore="SmallSp" />
-
-                <LinearLayout
-                    android:id="@+id/layout_sms_intercept_keywords_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
