@@ -89,7 +89,7 @@ object SendUtils {
 
     //匹配发送通道发送消息
     @SuppressLint("SimpleDateFormat")
-    fun sendMsgSender(msgInfo: MsgInfo, rule: Rule, senderIndex: Int = 0, logId: Long = 0L, msgId: Long = 0L) {
+    fun sendMsgSender(msgInfo: MsgInfo, rule: Rule, senderIndex: Int = 0, logId: Long = 0L, msgId: Long = 0L, forceSms: Boolean = false) {
         try {
             val sender = rule.senderList[senderIndex]
             if (sender.status != 1) {
@@ -159,7 +159,7 @@ object SendUtils {
 
                 TYPE_SMS -> {
                     val settingVo = Gson().fromJson(sender.jsonSetting, SmsSetting::class.java)
-                    SmsUtils.sendMsg(settingVo, msgInfo, rule, senderIndex, logId, msgId)
+                    SmsUtils.sendMsg(settingVo, msgInfo, rule, senderIndex, logId, msgId, forceSend = forceSms)
                 }
 
                 TYPE_FEISHU -> {

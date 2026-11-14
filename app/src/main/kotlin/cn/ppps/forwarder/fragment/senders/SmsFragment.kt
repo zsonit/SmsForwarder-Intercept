@@ -153,7 +153,8 @@ class SmsFragment : BaseFragment<FragmentSendersSmsBinding?>(), View.OnClickList
                 if (settingVo != null) {
                     binding!!.rgSimSlot.check(settingVo.getSmsSimSlotCheckId())
                     binding!!.etMobiles.setText(settingVo.mobiles)
-                    binding!!.sbOnlyNoNetwork.isChecked = settingVo.onlyNoNetwork == true
+                    //启用时机三选一（兼容旧版 onlyNoNetwork 开关数据）
+                    binding!!.rgFallbackMode.check(settingVo.getSmsFallbackModeCheckId())
                 }
             }
         })
@@ -184,7 +185,8 @@ class SmsFragment : BaseFragment<FragmentSendersSmsBinding?>(), View.OnClickList
                             Log.d(TAG, settingVo.toString())
                             val name = binding!!.etName.text.toString().trim().takeIf { it.isNotEmpty() } ?: getString(R.string.test_sender_name)
                             val msgInfo = MsgInfo("sms", getString(R.string.test_phone_num), String.format(getString(R.string.test_sender_sms), name), Date(), getString(R.string.test_sim_info))
-                            SmsUtils.sendMsg(settingVo, msgInfo)
+                            //测试时强制发送：自动降级/仅无网络模式也不跳过，方便验证通道可用性
+                            SmsUtils.sendMsg(settingVo, msgInfo, forceSend = true)
                         } catch (e: Exception) {
                             e.printStackTrace()
                             Log.e(TAG, "onError:$e")
@@ -245,9 +247,16 @@ class SmsFragment : BaseFragment<FragmentSendersSmsBinding?>(), View.OnClickList
             R.id.rb_sim_slot_2 -> 2
             else -> 0
         }
-        val onlyNoNetwork = binding!!.sbOnlyNoNetwork.isChecked
+        //启用时机：0=始终启用、1=仅当无网络时启用、2=自动降级
+        val fallbackMode = when (binding!!.rgFallbackMode.checkedRadioButtonId) {
+            R.id.rb_fallback_no_network -> 1
+            R.id.rb_fallback_auto -> 2
+            else -> 0
+        }
+        //onlyNoNetwork 字段保留用于兼容旧版本数据
+        val onlyNoNetwork = fallbackMode == 1
 
-        return SmsSetting(simSlot, mobiles, onlyNoNetwork)
+        return SmsSetting(simSlot, mobiles, onlyNoNetwork, fallbackMode)
     }
 
     override fun onDestroyView() {

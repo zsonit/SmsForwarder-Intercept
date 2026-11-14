@@ -21,19 +21,48 @@ class SmsUtils {
 
         private val TAG: String = SmsUtils::class.java.simpleName
 
+        //启用时机：0=始终启用、1=仅当无网络时启用、2=自动降级
+        const val FALLBACK_ALWAYS = 0
+        const val FALLBACK_ONLY_NO_NETWORK = 1
+        const val FALLBACK_AUTO = 2
+
+        /**
+         * 判断当前是否真实可用网络（有网络连接 且 能 ping 通外网）
+         */
+        fun isNetworkReallyAvailable(): Boolean {
+            return try {
+                NetworkUtils.isHaveInternet() && NetworkUtils.isAvailableByPing()
+            } catch (e: Exception) {
+                Log.e(TAG, "isNetworkReallyAvailable error: ${e.message}")
+                false
+            }
+        }
+
         fun sendMsg(
             setting: SmsSetting,
             msgInfo: MsgInfo,
             rule: Rule? = null,
             senderIndex: Int = 0,
             logId: Long = 0L,
-            msgId: Long = 0L
+            msgId: Long = 0L,
+            forceSend: Boolean = false
         ) {
-            //仅当无网络时启用 && 判断是否真实有网络
-            if (setting.onlyNoNetwork && NetworkUtils.isHaveInternet() && NetworkUtils.isAvailableByPing()) {
-                SendUtils.updateLogs(logId, 0, getString(R.string.OnlyNoNetwork))
-                SendUtils.senderLogic(0, msgInfo, rule, senderIndex, msgId)
-                return
+            when (setting.getEffectiveFallbackMode()) {
+                //仅当无网络时启用：有真实可用网络就跳过本通道
+                FALLBACK_ONLY_NO_NETWORK -> if (isNetworkReallyAvailable()) {
+                    Log.d(TAG, "仅当无网络时启用：当前有网络，跳过短信通道")
+                    SendUtils.updateLogs(logId, 0, getString(R.string.OnlyNoNetwork))
+                    SendUtils.senderLogic(0, msgInfo, rule, senderIndex, msgId)
+                    return
+                }
+
+                //自动降级：有网络时先不发，待命；由 SendWorker 在其他通道全部失败后强制补发
+                FALLBACK_AUTO -> if (isNetworkReallyAvailable() && !forceSend) {
+                    Log.d(TAG, "自动降级：当前有网络，短信通道待命（logId=$logId）")
+                    SendUtils.updateLogs(logId, 1, getString(R.string.SmsAutoStandby))
+                    SendUtils.senderLogic(0, msgInfo, rule, senderIndex, msgId)
+                    return
+                }
             }
 
             if (ActivityCompat.checkSelfPermission(XUtil.getContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {

@@ -335,7 +335,13 @@
     <string name="same_source">原進原出</string>
     <string name="SmsMobiles">接收手機</string>
     <string name="SmsMobilesTips">提示：\n1.多個號碼以半角分號分隔，例如：15888888888;19999999999\n2.允許插入`{{來源號碼}}`標籤來實現簡訊自動回復（簡訊/來電場景）</string>
-    <string name="OnlyNoNetwork">僅當無網路時啟用</string>
+<string name="OnlyNoNetwork">僅當無網路時啟用</string>
+    <string name="SmsFallbackAlways">始終啟用（每條都發簡訊）</string>
+    <string name="SmsFallbackAuto">自動降級（有網路優先網路通道，失敗或無網路時才發簡訊）</string>
+    <string name="SmsFallbackAutoTips">提示：選「自動降級」後，網路可用時本通道自動待命；同一條訊息的其他轉發通道全部失敗（或沒有網路）時，才會自動改用簡訊發送，無需手動開關。</string>
+    <string name="SmsAutoStandby">自動降級：目前網路可用，簡訊通道待命（其他通道失敗時自動補發）</string>
+    <string name="SmsAutoFallbackTriggered">自動降級觸發：其他通道未成功，改用簡訊發送</string>
+    <string name="SmsAutoFallbackSkipped">自動降級未觸發：其他通道已成功，跳過簡訊發送</string>
     <!--SettingActivity-->
     <string name="notify_content_label">通知欄文案</string>
     <string name="device_name">裝置名稱</string>

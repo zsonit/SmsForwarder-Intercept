@@ -130,24 +130,48 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/BarStyle.Switch"
+                style="@style/BarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/OnlyNoNetwork"
                     android:textStyle="bold" />
 
-                <com.xuexiang.xui.widget.button.switchbutton.SwitchButton
-                    android:id="@+id/sb_onlyNoNetwork"
-                    style="@style/SwitchButtonStyle"
+                <RadioGroup
+                    android:id="@+id/rg_fallback_mode"
+                    style="@style/rg_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_fallback_always"
+                        style="@style/rg_rb_style"
+                        android:checked="true"
+                        android:text="@string/SmsFallbackAlways" />
+
+                    <RadioButton
+                        android:id="@+id/rb_fallback_no_network"
+                        style="@style/rg_rb_style"
+                        android:text="@string/OnlyNoNetwork" />
+
+                    <RadioButton
+                        android:id="@+id/rb_fallback_auto"
+                        style="@style/rg_rb_style"
+                        android:text="@string/SmsFallbackAuto" />
+
+                </RadioGroup>
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true" />
+                    android:text="@string/SmsFallbackAutoTips"
+                    android:textSize="@dimen/text_size_mini"
+                    tools:ignore="SmallSp" />
 
             </LinearLayout>
 

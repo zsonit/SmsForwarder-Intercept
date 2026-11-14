@@ -17,6 +17,7 @@ import cn.ppps.forwarder.database.entity.Rule
 import cn.ppps.forwarder.database.entity.SmsIntercepted
 import cn.ppps.forwarder.entity.MsgInfo
 import cn.ppps.forwarder.entity.TaskSetting
+import cn.ppps.forwarder.entity.setting.SmsSetting
 import cn.ppps.forwarder.utils.CHECK_SIM_SLOT_ALL
 import cn.ppps.forwarder.utils.DataProvider
 import cn.ppps.forwarder.utils.HistoryUtils
@@ -24,11 +25,13 @@ import cn.ppps.forwarder.utils.Log
 import cn.ppps.forwarder.utils.SendUtils
 import cn.ppps.forwarder.utils.SettingUtils
 import cn.ppps.forwarder.utils.SmsInterceptUtils
+import cn.ppps.forwarder.utils.TYPE_SMS
 import cn.ppps.forwarder.utils.TASK_CONDITION_APP
 import cn.ppps.forwarder.utils.TASK_CONDITION_CALL
 import cn.ppps.forwarder.utils.TASK_CONDITION_SMS
 import cn.ppps.forwarder.utils.TaskWorker
 import cn.ppps.forwarder.utils.Worker
+import cn.ppps.forwarder.utils.sender.SmsUtils
 import cn.ppps.forwarder.utils.task.ConditionUtils
 import com.xuexiang.xutil.resource.ResUtils
 import com.xuexiang.xutil.security.CipherUtils
@@ -134,6 +137,11 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
 
                 val msg = Msg(0, msgInfo.type, msgInfo.from, msgInfo.content, msgInfo.simSlot, msgInfo.simInfo, msgInfo.subId, msgInfo.callType)
                 val msgId = Core.msg.insert(msg)
+
+                //自动降级：记录「手机短信 + 自动降级」通道的规则与日志，网络可用时先待命
+                var autoFallbackRule: Rule? = null
+                var autoFallbackLogId = 0L
+
                 for (rule in ruleListMatched) {
                     val sender = rule.senderList[0]
                     if (isSilentPeriod) {
@@ -141,9 +149,27 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
                         Core.logs.insert(log)
                         continue
                     }
+
+                    //自动降级预处理：网络可用时短信通道暂不发送，待其他通道出结果后决定是否补发
+                    if (sender.type == TYPE_SMS) {
+                        val smsSetting = Gson().fromJson(sender.jsonSetting, SmsSetting::class.java)
+                        if (smsSetting?.getEffectiveFallbackMode() == SmsUtils.FALLBACK_AUTO && SmsUtils.isNetworkReallyAvailable()) {
+                            val standbyLog = Logs(0, msgInfo.type, msgId, rule.id, sender.id, 1, ResUtils.getString(R.string.SmsAutoStandby))
+                            autoFallbackLogId = Core.logs.insert(standbyLog)
+                            autoFallbackRule = rule
+                            Log.i(TAG, "自动降级：短信通道待命（ruleId=${rule.id}, logId=$autoFallbackLogId）")
+                            continue
+                        }
+                    }
+
                     val log = Logs(0, msgInfo.type, msgId, rule.id, sender.id)
                     val logId = Core.logs.insert(log)
                     SendUtils.sendMsgSender(msgInfo, rule, 0, logId, msgId)
+                }
+
+                //自动降级收尾：等其他通道出结果，全部失败（或没有其他通道）时改用短信补发
+                if (autoFallbackRule != null && autoFallbackLogId > 0) {
+                    handleAutoFallback(msgInfo, autoFallbackRule, msgId, autoFallbackLogId)
                 }
 
             } catch (e: Exception) {
@@ -153,6 +179,49 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
             }
 
             return@withContext Result.success()
+        }
+    }
+
+    /**
+     * 自动降级收尾：
+     * 轮询等待同一条消息的其他通道出结果（成功/失败），
+     * 全部失败（或没有其他通道）时，改用短信通道补发；任一通道成功则跳过短信。
+     */
+    private fun handleAutoFallback(msgInfo: MsgInfo, rule: Rule, msgId: Long, standbyLogId: Long) {
+        try {
+            //等待时间取转发请求超时（上限 30 秒），期间每秒检查一次日志状态
+            val timeoutMs = SettingUtils.requestTimeout.coerceIn(3, 30) * 1000L
+            val deadline = System.currentTimeMillis() + timeoutMs
+
+            fun otherLogs(): List<Logs> = Core.logs.getByMsgId(msgId).filter { it.id != standbyLogId }
+
+            while (System.currentTimeMillis() < deadline) {
+                val logs = otherLogs()
+                val allFinal = logs.isNotEmpty() && logs.all { it.forwardStatus != 1 }
+                if (allFinal) break
+                Thread.sleep(1000)
+            }
+
+            val logs = otherLogs()
+            val anySuccess = logs.any { it.forwardStatus == 2 }
+
+            if (logs.isNotEmpty() && anySuccess) {
+                Log.i(TAG, "自动降级：其他通道已成功，跳过短信发送（standbyLogId=$standbyLogId）")
+                Core.logs.updateStatus(standbyLogId, 0, ResUtils.getString(R.string.SmsAutoFallbackSkipped))
+                return
+            }
+
+            Log.i(TAG, "自动降级：其他通道未成功（数量=${logs.size}, 任一成功=$anySuccess），改用短信发送（standbyLogId=$standbyLogId）")
+            Core.logs.updateStatus(standbyLogId, 1, ResUtils.getString(R.string.SmsAutoFallbackTriggered))
+            SendUtils.sendMsgSender(msgInfo, rule, 0, standbyLogId, msgId, forceSms = true)
+        } catch (e: Exception) {
+            Log.e(TAG, "自动降级处理异常：${e.message}，直接尝试短信补发")
+            try {
+                Core.logs.updateStatus(standbyLogId, 1, ResUtils.getString(R.string.SmsAutoFallbackTriggered))
+                SendUtils.sendMsgSender(msgInfo, rule, 0, standbyLogId, msgId, forceSms = true)
+            } catch (e2: Exception) {
+                Log.e(TAG, "自动降级短信补发失败：${e2.message}")
+            }
         }
     }
 

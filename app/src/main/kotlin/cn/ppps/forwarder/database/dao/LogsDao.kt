@@ -62,6 +62,9 @@ interface LogsDao {
     @Query("SELECT * FROM Logs where id=:id")
     fun getOne(id: Long): LogsAndRuleAndSender
 
+    @Query("SELECT * FROM Logs where msg_id=:msgId ORDER BY id ASC")
+    fun getByMsgId(msgId: Long): List<Logs>
+
     @Query("SELECT count(*) FROM Logs where type=:type and forward_status=:forwardStatus")
     fun count(type: String, forwardStatus: Int): Single<Int>
 

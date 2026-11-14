@@ -23,6 +23,9 @@ class LogsRepository(private val logsDao: LogsDao) {
 
     fun getOne(id: Long) = logsDao.getOne(id)
 
+    @WorkerThread
+    fun getByMsgId(msgId: Long): List<Logs> = logsDao.getByMsgId(msgId)
+
     fun getIdsByTimeAndStatus(hours: Int, statusList: List<Int>): List<Logs> {
         var sql = "SELECT * FROM Logs WHERE 1=1"
         if (hours > 0) {

@@ -334,7 +334,13 @@
     <string name="same_source">Same source</string>
     <string name="SmsMobiles">Receive Mobile Phone Numbers</string>
     <string name="SmsMobilesTips">Tips:\n1.Separated by ; , e.g. 15888888888;19999999999\n2.Allow to insert `{{FROM}}` tag to realize SMS auto-reply (SMS/Call scenario)</string>
-    <string name="OnlyNoNetwork">Enable only when no network</string>
+<string name="OnlyNoNetwork">Enable only when no network</string>
+    <string name="SmsFallbackAlways">Always enabled (send SMS for every message)</string>
+    <string name="SmsFallbackAuto">Auto fallback (prefer network channels; send SMS only when they fail or there is no network)</string>
+    <string name="SmsFallbackAutoTips">Tips: with 「Auto fallback」, this channel stands by while the network is available; it sends the SMS automatically only when all other channels for the same message fail (or there is no network). No manual toggling needed.</string>
+    <string name="SmsAutoStandby">Auto fallback: network available, SMS channel on standby (will resend via SMS if others fail)</string>
+    <string name="SmsAutoFallbackTriggered">Auto fallback triggered: other channels failed, sending via SMS</string>
+    <string name="SmsAutoFallbackSkipped">Auto fallback not triggered: other channels succeeded, SMS skipped</string>
     <!--SettingActivity-->
     <string name="notify_content_label">Notification</string>
     <string name="device_name">Device Name</string>

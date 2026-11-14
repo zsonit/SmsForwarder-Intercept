@@ -335,7 +335,13 @@
     <string name="same_source">原进原出</string>
     <string name="SmsMobiles">接收手机</string>
     <string name="SmsMobilesTips">Tips：\n1.多个号码以半角分号分隔，例如：15888888888;19999999999\n2.允许插入`{{来源号码}}`标签来实现短信自动回复（短信/来电场景）</string>
-    <string name="OnlyNoNetwork">仅当无网络时启用</string>
+<string name="OnlyNoNetwork">仅当无网络时启用</string>
+    <string name="SmsFallbackAlways">始终启用（每条都发短信）</string>
+    <string name="SmsFallbackAuto">自动降级（有网络优先网络通道，失败或无网络时才发短信）</string>
+    <string name="SmsFallbackAutoTips">提示：选「自动降级」后，网络可用时本通道自动待命；同一条消息的其他转发通道全部失败（或没有网络）时，才会自动改用短信发送，无需手动开关。</string>
+    <string name="SmsAutoStandby">自动降级：当前网络可用，短信通道待命（其他通道失败时自动补发）</string>
+    <string name="SmsAutoFallbackTriggered">自动降级触发：其他通道未成功，改用短信发送</string>
+    <string name="SmsAutoFallbackSkipped">自动降级未触发：其他通道已成功，跳过短信发送</string>
     <!--SettingActivity-->
     <string name="notify_content_label">通知栏文案</string>
     <string name="device_name">设备名称</string>
